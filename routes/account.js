@@ -3,7 +3,7 @@ var router = express.Router()
 var bcrypt = require('bcryptjs')  //MUST HAVE bcrypt, THIS IS THE KEY
 // var Profile = require('../models/Profile')
 var controllers = require('../controllers')
-// var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken')
 var utils = require('../utils')
 
 // router.post('/:action', function(req, res, next){

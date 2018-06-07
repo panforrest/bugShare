@@ -394,6 +394,25 @@ var Signup = function (_Component) {
             });
         }
     }, {
+        key: 'login',
+        value: function login(event) {
+            var _this3 = this;
+
+            event.preventDefault();
+            _utils.APIManager.post('/account/login', this.state.visitor, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    // console.log(msg)
+                    alert(msg);
+                    return;
+                }
+
+                console.log(JSON.stringify(response));
+                var result = response.profile;
+                _this3.props.currentUserReceived(result);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -423,6 +442,20 @@ var Signup = function (_Component) {
                     _react2.default.createElement(
                         'button',
                         { onClick: this.register.bind(this) },
+                        'Submit'
+                    ),
+                    _react2.default.createElement(
+                        'h2',
+                        null,
+                        'Log in'
+                    ),
+                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: this.login.bind(this) },
                         'Submit'
                     )
                 )
@@ -544,7 +577,12 @@ exports.default = {
 				callback(err, null);
 				return;
 			}
-
+			console.log('APIManager: ' + JSON.stringify(response.body));
+			var confirmation = response.body.confirmation;
+			if (confirmation != 'success') {
+				callback({ message: response.body.message }, null);
+				return;
+			}
 			callback(null, response.body); //callback(null, response.result)
 		});
 	}
