@@ -16,5 +16,20 @@ export default  {
 
 	            callback(null, response.body)//console.log(JSON.stringify(response.body))
 	        })	    	
-	    }
+	    },
+
+	post: ((endpoint, params, callback) => {
+		superagent
+		.post(endpoint)  //.get(endpoint)
+		.send(params)   //.query(params)
+		.set('Accept', 'application/json')
+		.end((err, response) => {
+			if (err) {
+				callback(err, null)
+				return
+			}
+
+			callback(null, response.body)   //callback(null, response.result)
+		})
+	})
 }

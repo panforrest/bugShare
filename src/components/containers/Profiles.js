@@ -3,9 +3,9 @@ import { APIManager } from '../../utils'
 
 class Profiles extends Component {
     constructor(){
-    	super()  //I FORGOT THE MOST IMPORTANT THING
+    	super()
     	this.state = {
-    		profile: []
+    		profiles: []
     	}
     }
 
@@ -19,19 +19,19 @@ class Profiles extends Component {
             console.log(JSON.stringify(response))
             var results = response.results
             this.setState({
-            	profile: response.results  //profile: response
+            	profiles: results  //profile: response
             })
 
          })
     }        
 
 	render(){
-        var list = this.state.profile.map((profile, i) => {
+        var list = this.state.profiles.map((profile, i) => {
         	return (
                 <li key={profile.id}>{profile.email}</li>
         	)
         })
-		
+
 		return(
 			<div>
 			    <ol>
