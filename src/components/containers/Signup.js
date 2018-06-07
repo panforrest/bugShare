@@ -48,13 +48,17 @@ class Signup extends Component {
 	render(){
 		return(
 			<div>
-			    <h2>Sign up</h2>
-                <input onChange={this.update.bind(this)} type='text' id='email' placeholder='Email' /><br />
-                <input onChange={this.update.bind(this)} type='text' id='firstName' placeholder='First Name' /><br />
-                <input onChange={this.update.bind(this)} type='text' id='lastName' placeholder='Last Name' /><br />
-                <input onChange={this.update.bind(this)} type='text' id='password' placeholder='Password' /><br />
+                {(this.props.currentUser != null) ? <h2>Welcome, {this.props.currentUser.email}</h2> : 
+                <div>
+    			    <h2>Sign up</h2>
+                    <input onChange={this.update.bind(this)} type='text' id='email' placeholder='Email' /><br />
+                    <input onChange={this.update.bind(this)} type='text' id='firstName' placeholder='First Name' /><br />
+                    <input onChange={this.update.bind(this)} type='text' id='lastName' placeholder='Last Name' /><br />
+                    <input onChange={this.update.bind(this)} type='text' id='password' placeholder='Password' /><br />
 
-                <button onClick={this.register.bind(this)}>Submit</button>
+                    <button onClick={this.register.bind(this)}>Submit</button>
+                </div> 
+                }    
 			</div>
 		)
 	}
@@ -63,13 +67,15 @@ class Signup extends Component {
 
 const stateToProps = (state) => {
     return {
-        profile: state.profile.user
+        profile: state.profile.user,
+        currentUser: state.account.currentUser
     }
 }
 
 const dispatchToProps = (dispatch) => {
     return {
-        profileCreated: (profile) => dispatch(actions.profileCreated(profile))
+        profileCreated: (profile) => dispatch(actions.profileCreated(profile)),
+        currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile))
     }
 }
 
