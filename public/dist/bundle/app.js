@@ -198,6 +198,62 @@ _reactDom2.default.render(_react2.default.createElement(App, null), document.get
 
 /***/ }),
 
+/***/ 19:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.APIManager = undefined;
+
+var _APIManager = __webpack_require__(27);
+
+var _APIManager2 = _interopRequireDefault(_APIManager);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.APIManager = _APIManager2.default;
+
+/***/ }),
+
+/***/ 27:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+				value: true
+});
+
+var _superagent = __webpack_require__(26);
+
+var _superagent2 = _interopRequireDefault(_superagent);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+
+				get: function get(endpoint, params, callback) {
+								_superagent2.default.get(endpoint).query(null).set('Accept', 'application/json') //.set('accepte', 'app/json')
+								.end(function (err, response) {
+												//.result((err, result)=>{
+												if (err) {
+																// var err = err.message || err
+																callback(err, null); //alert(err)
+																return;
+												}
+
+												callback(null, response.body); //console.log(JSON.stringify(response.body))
+								});
+				}
+};
+
+/***/ }),
+
 /***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -205,7 +261,7 @@ _reactDom2.default.render(_react2.default.createElement(App, null), document.get
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -213,6 +269,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _utils = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -223,26 +281,62 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Profiles = function (_Component) {
-	_inherits(Profiles, _Component);
+  _inherits(Profiles, _Component);
 
-	function Profiles() {
-		_classCallCheck(this, Profiles);
+  function Profiles() {
+    _classCallCheck(this, Profiles);
 
-		return _possibleConstructorReturn(this, (Profiles.__proto__ || Object.getPrototypeOf(Profiles)).apply(this, arguments));
-	}
+    //I FORGOT THE MOST IMPORTANT THING
+    var _this = _possibleConstructorReturn(this, (Profiles.__proto__ || Object.getPrototypeOf(Profiles)).call(this));
 
-	_createClass(Profiles, [{
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				'This is Profile Component.'
-			);
-		}
-	}]);
+    _this.state = {
+      profile: []
+    };
+    return _this;
+  }
 
-	return Profiles;
+  _createClass(Profiles, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _utils.APIManager.get('/api/profile', null, function (err, response) {
+        if (err) {
+          alert(err);
+          return;
+        }
+
+        console.log(JSON.stringify(response));
+        var results = response.results;
+        _this2.setState({
+          profile: response.results //profile: response
+        });
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var list = this.state.profile.map(function (profile, i) {
+        return _react2.default.createElement(
+          'li',
+          { key: profile.id },
+          profile.email
+        );
+      });
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'ol',
+          null,
+          list
+        )
+      );
+    }
+  }]);
+
+  return Profiles;
 }(_react.Component);
 
 exports.default = Profiles;
