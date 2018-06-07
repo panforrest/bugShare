@@ -373,15 +373,16 @@ var Signup = function (_Component) {
 
       event.preventDefault();
       // console.log('register: ')
-      _utils.APIManager.post('/api/profile', this.state.visitor, function (err, response) {
+      // APIManager.post('/api/profile', this.state.visitor, (err, response) => {
+      _utils.APIManager.post('/account/register', this.state.visitor, function (err, response) {
         if (err) {
           var msg = err.message || err;
           alert(msg);
           return;
         }
 
-        console.log('register: ' + JSON.stringify(response)); //console.log(JSON.stringify(response.result))
-        var result = response.result;
+        console.log('register: ' + JSON.stringify(response));
+        var result = response.profile; //var result = response.result
         _this2.props.profileCreated(result);
       });
     }
