@@ -13,6 +13,14 @@ export default (state=initialState, action) => {  //export default (state=initia
             updated['list'] = action.profiles
             return updated  //return updatedState
 
+        case constants.PROFILE_CREATED:
+            console.log('PROFILE_CREATED: '+JSON.stringify(action.profile))
+            // updated['user'] = action.profile
+            let updatedList = Object.assign([], updated.list)  //let updatedList = Object.assign([], state)
+            updatedList.push(action.profile)
+            updated['list'] = updatedList   //DON'T FORGET THIS LINE
+            return updated
+
         default:
             return state
 	} 

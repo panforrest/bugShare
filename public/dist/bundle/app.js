@@ -160,7 +160,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = { //export {
 
-    PROFILES_RECEIVED: 'PROFILES_RECEIVED'
+    PROFILES_RECEIVED: 'PROFILES_RECEIVED',
+    PROFILE_CREATED: 'PROFILE_CREATED'
 
 };
 
@@ -222,6 +223,14 @@ exports.default = function () {
       console.log('PROFILES_RECEIVED: ' + JSON.stringify(action.profiles));
       updated['list'] = action.profiles;
       return updated; //return updatedState
+
+    case _constants2.default.PROFILE_CREATED:
+      console.log('PROFILE_CREATED: ' + JSON.stringify(action.profile));
+      // updated['user'] = action.profile
+      var updatedList = Object.assign([], updated.list); //let updatedList = Object.assign([], state)
+      updatedList.push(action.profile);
+      updated['list'] = updatedList; //DON'T FORGET THIS LINE
+      return updated;
 
     default:
       return state;
@@ -311,6 +320,12 @@ var _react2 = _interopRequireDefault(_react);
 
 var _utils = __webpack_require__(10);
 
+var _actions = __webpack_require__(24);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _reactRedux = __webpack_require__(6);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -318,8 +333,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-//import { APIManager } from '../../utils/APIManager'
 
 var Signup = function (_Component) {
   _inherits(Signup, _Component);
@@ -356,6 +369,8 @@ var Signup = function (_Component) {
   }, {
     key: 'register',
     value: function register(event) {
+      var _this2 = this;
+
       event.preventDefault();
       // console.log('register: ')
       _utils.APIManager.post('/api/profile', this.state.visitor, function (err, response) {
@@ -366,6 +381,8 @@ var Signup = function (_Component) {
         }
 
         console.log('register: ' + JSON.stringify(response)); //console.log(JSON.stringify(response.result))
+        var result = response.result;
+        _this2.props.profileCreated(result);
       });
     }
   }, {
@@ -399,7 +416,21 @@ var Signup = function (_Component) {
   return Signup;
 }(_react.Component);
 
-exports.default = Signup;
+var stateToProps = function stateToProps(state) {
+  return {
+    profile: state.profile.user
+  };
+};
+
+var dispatchToProps = function dispatchToProps(dispatch) {
+  return {
+    profileCreated: function profileCreated(profile) {
+      return dispatch(_actions2.default.profileCreated(profile));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Signup);
 
 /***/ }),
 /* 21 */,
@@ -426,6 +457,14 @@ exports.default = {
         return {
             type: _constants2.default.PROFILES_RECEIVED, //type: actions,
             profiles: profiles
+        };
+    },
+
+    profileCreated: function profileCreated(profile) {
+        //profileCreated: (action.type) => {
+        return {
+            type: _constants2.default.PROFILE_CREATED,
+            profile: profile
         };
     }
 };
