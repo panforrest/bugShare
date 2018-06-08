@@ -1157,6 +1157,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _utils = __webpack_require__(6);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1171,16 +1173,50 @@ var Bugs = function (_Component) {
 	function Bugs() {
 		_classCallCheck(this, Bugs);
 
-		return _possibleConstructorReturn(this, (Bugs.__proto__ || Object.getPrototypeOf(Bugs)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (Bugs.__proto__ || Object.getPrototypeOf(Bugs)).call(this));
+
+		_this.state = {
+			bugs: []
+		};
+		return _this;
 	}
 
 	_createClass(Bugs, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			// console.log('componentDidMount: ')
+			_utils.APIManager.get('/api/bug', null, function (err, response) {
+				if (err) {
+					var msg = err.message || err;
+					alert(msg);
+					return;
+				}
+
+				console.log(JSON.stringify(response.results));
+				var results = response.results;
+				_this2.setState({
+					bugs: results
+				});
+			});
+		}
+	}, {
 		key: 'render',
 		value: function render() {
+			var bugs = this.state.bugs.map(function (bug, i) {
+				return _react2.default.createElement(
+					'li',
+					{ key: bug.id },
+					bug.title
+				);
+			});
+
 			return _react2.default.createElement(
 				'div',
 				null,
-				'This is Bugs container.'
+				'This is Bugs List:',
+				bugs
 			);
 		}
 	}]);
