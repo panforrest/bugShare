@@ -420,6 +420,8 @@ var _Signup = __webpack_require__(23);
 
 var _Signup2 = _interopRequireDefault(_Signup);
 
+var _utils = __webpack_require__(11);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -438,6 +440,21 @@ var Admin = function (_Component) {
     }
 
     _createClass(Admin, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            _utils.APIManager.get('/account/currentuser', null, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+                console.log('Admin.js: ' + JSON.stringify(response.profile));
+                _this2.props.currentUserReceived(response.profile);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
