@@ -135,7 +135,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([48,0]);
+/******/ 	deferredModules.push([52,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -144,8 +144,7 @@
 /* 0 */,
 /* 1 */,
 /* 2 */,
-/* 3 */,
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -160,12 +159,14 @@ exports.default = { //export {
     PROFILE_CREATED: 'PROFILE_CREATED',
     CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED',
     BUGS_RECEIVED: 'BUGS_RECEIVED',
-    BUG_CREATED: 'BUG_CREATED'
+    BUG_CREATED: 'BUG_CREATED',
+    TRACKS_RECEIVED: 'TRACKS_RECEIVED',
+    TRACK_CREATED: 'TRACK_CREATED'
 
 };
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -175,7 +176,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _constants = __webpack_require__(4);
+var _constants = __webpack_require__(3);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -216,11 +217,25 @@ exports.default = {
             type: _constants2.default.BUG_CREATED,
             bug: bug
         };
+    },
+
+    tracksReceived: function tracksReceived(tracks) {
+        return {
+            type: _constants2.default.TRACKS_RECEIVED,
+            tracks: tracks
+        };
+    },
+
+    trackCreated: function trackCreated(track) {
+        return {
+            type: _constants2.default.TRACK_CREATED,
+            track: track
+        };
     }
 };
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -231,7 +246,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.APIManager = undefined;
 
-var _APIManager = __webpack_require__(34);
+var _APIManager = __webpack_require__(38);
 
 var _APIManager2 = _interopRequireDefault(_APIManager);
 
@@ -240,6 +255,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.APIManager = _APIManager2.default;
 
 /***/ }),
+/* 6 */,
 /* 7 */,
 /* 8 */,
 /* 9 */,
@@ -257,10 +273,100 @@ exports.APIManager = _APIManager2.default;
 
 
 Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _constants = __webpack_require__(3);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var initialState = {
+
+	list: []
+
+};
+
+exports.default = function () {
+	var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+	var action = arguments[1];
+
+	var updatedState = Object.assign({}, state);
+	switch (action.type) {
+		case _constants2.default.TRACKS_RECEIVED:
+			console.log('TRACKS_RECEIVED: ' + JSON.stringify(action.tracks));
+			updatedState['list'] = action.tracks;
+			return updatedState;
+
+		case _constants2.default.TRACK_CREATED:
+			var updatedList = Object.assign([], updatedState.list);
+			updatedList.push(action.track);
+			updatedState['list'] = updatedList;
+			return updatedState;
+
+		default:
+			return state;
+	}
+};
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _constants = __webpack_require__(4);
+var _constants = __webpack_require__(3);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var initialState = {
+
+    list: []
+
+};
+
+exports.default = function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    var updated = Object.assign({}, state);
+    switch (action.type) {
+        case _constants2.default.BUGS_RECEIVED:
+            console.log('BUGS_RECEIVED: ' + JSON.stringify(action.bugs));
+            updated['list'] = action.bugs;
+            return updated;
+
+        case _constants2.default.BUG_CREATED:
+            var updatedList = Object.assign([], updated.list);
+            updatedList.push(action.bug);
+            updated['list'] = updatedList;
+            return updated;
+
+        default:
+            return state;
+    }
+};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _constants = __webpack_require__(3);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -294,7 +400,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -304,7 +410,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _constants = __webpack_require__(4);
+var _constants = __webpack_require__(3);
 
 var _constants2 = _interopRequireDefault(_constants);
 
@@ -340,7 +446,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -349,29 +455,34 @@ exports.default = function () {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.bugReducer = exports.accountReducer = exports.profileReducer = undefined;
+exports.trackReducer = exports.bugReducer = exports.accountReducer = exports.profileReducer = undefined;
 
-var _profileReducer = __webpack_require__(18);
+var _profileReducer = __webpack_require__(20);
 
 var _profileReducer2 = _interopRequireDefault(_profileReducer);
 
-var _accountReducer = __webpack_require__(17);
+var _accountReducer = __webpack_require__(19);
 
 var _accountReducer2 = _interopRequireDefault(_accountReducer);
 
-var _bugReducer = __webpack_require__(51);
+var _bugReducer = __webpack_require__(18);
 
 var _bugReducer2 = _interopRequireDefault(_bugReducer);
+
+var _trackReducer = __webpack_require__(17);
+
+var _trackReducer2 = _interopRequireDefault(_trackReducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.profileReducer = _profileReducer2.default;
 exports.accountReducer = _accountReducer2.default;
 exports.bugReducer = _bugReducer2.default;
+exports.trackReducer = _trackReducer2.default;
 
 /***/ }),
-/* 20 */,
-/* 21 */
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -383,11 +494,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(15);
 
-var _reduxThunk = __webpack_require__(20);
+var _reduxThunk = __webpack_require__(22);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reducers = __webpack_require__(19);
+var _reducers = __webpack_require__(21);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -402,7 +513,8 @@ exports.default = {
         var reducers = (0, _redux.combineReducers)({
             profile: _reducers.profileReducer,
             account: _reducers.accountReducer,
-            bug: _reducers.bugReducer
+            bug: _reducers.bugReducer,
+            track: _reducers.trackReducer
         }),
             store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)());
 
@@ -416,7 +528,237 @@ exports.default = {
 };
 
 /***/ }),
-/* 22 */
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = __webpack_require__(5);
+
+var _actions = __webpack_require__(4);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _reactRedux = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <li key={i}>{this.props.track.name}</li>
+
+
+var Tracks = function (_Component) {
+	_inherits(Tracks, _Component);
+
+	function Tracks() {
+		_classCallCheck(this, Tracks);
+
+		var _this = _possibleConstructorReturn(this, (Tracks.__proto__ || Object.getPrototypeOf(Tracks)).call(this));
+
+		_this.state = {
+			tracks: []
+		};
+		return _this;
+	}
+
+	_createClass(Tracks, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			console.log('Tracks container componentDidMount: ');
+			_utils.APIManager.get('/api/track', null, function (err, response) {
+				if (err) {
+					var msg = err.message || err;
+					alert(msg);
+					return;
+				}
+
+				console.log('Tracks container componentDidMount: ' + JSON.stringify(response.results));
+				var results = response.results;
+				// this.setState({
+				// 	tracks: results
+				// })
+				_this2.props.tracksReceived(response.results);
+			});
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var list = this.props.tracks.map(function (track, i) {
+				return _react2.default.createElement(
+					'li',
+					{ key: i },
+					track.name
+				);
+			});
+
+			return _react2.default.createElement(
+				'div',
+				null,
+				_react2.default.createElement(
+					'h2',
+					null,
+					'Track List'
+				),
+				_react2.default.createElement(
+					'ol',
+					null,
+					list
+				)
+			);
+		}
+	}]);
+
+	return Tracks;
+}(_react.Component);
+
+var stateToProps = function stateToProps(state) {
+	return {
+		tracks: state.track.list
+	};
+};
+
+var dispatchToProps = function dispatchToProps(dispatch) {
+	return {
+		tracksReceived: function tracksReceived(tracks) {
+			return dispatch(_actions2.default.tracksReceived(tracks));
+		}
+	};
+};
+
+exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Tracks);
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _actions = __webpack_require__(4);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _reactRedux = __webpack_require__(2);
+
+var _utils = __webpack_require__(5);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import { Signup } from '../presentation'
+
+
+var Bugs = function (_Component) {
+	_inherits(Bugs, _Component);
+
+	function Bugs() {
+		_classCallCheck(this, Bugs);
+
+		var _this = _possibleConstructorReturn(this, (Bugs.__proto__ || Object.getPrototypeOf(Bugs)).call(this));
+
+		_this.state = {
+			bugs: []
+		};
+		return _this;
+	}
+
+	_createClass(Bugs, [{
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			var _this2 = this;
+
+			// console.log('componentDidMount: ')
+			_utils.APIManager.get('/api/bug', null, function (err, response) {
+				if (err) {
+					var msg = err.message || err;
+					alert(msg);
+					return;
+				}
+
+				console.log(JSON.stringify(response.results));
+				var results = response.results;
+				// this.setState({
+				// 	bugs: results
+				// })
+				_this2.props.bugsReceived(results);
+			});
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var bugs = this.props.bugs.map(function (bug, i) {
+				return _react2.default.createElement(
+					'li',
+					{ key: i },
+					bug.title
+				);
+			});
+
+			return _react2.default.createElement(
+				'div',
+				null,
+				'This is Bugs List:',
+				_react2.default.createElement(
+					'ol',
+					null,
+					bugs
+				)
+			);
+		}
+	}]);
+
+	return Bugs;
+}(_react.Component);
+
+var stateToProps = function stateToProps(state) {
+	return {
+		bugs: state.bug.list
+	};
+};
+
+var dispatchToProps = function dispatchToProps(dispatch) {
+	return {
+		bugsReceived: function bugsReceived(bugs) {
+			return dispatch(_actions2.default.bugsReceived(bugs));
+		}
+
+	};
+};
+
+exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Bugs);
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -432,9 +774,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utils = __webpack_require__(6);
+var _utils = __webpack_require__(5);
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(4);
 
 var _actions2 = _interopRequireDefault(_actions);
 
@@ -592,7 +934,7 @@ var dispatchToProps = function dispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Signup);
 
 /***/ }),
-/* 23 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -603,7 +945,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Signup = undefined;
 
-var _Signup = __webpack_require__(22);
+var _Signup = __webpack_require__(26);
 
 var _Signup2 = _interopRequireDefault(_Signup);
 
@@ -612,7 +954,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.Signup = _Signup2.default;
 
 /***/ }),
-/* 24 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -628,15 +970,15 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(4);
 
 var _actions2 = _interopRequireDefault(_actions);
 
 var _reactRedux = __webpack_require__(2);
 
-var _presentation = __webpack_require__(23);
+var _presentation = __webpack_require__(27);
 
-var _utils = __webpack_require__(6);
+var _utils = __webpack_require__(5);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -659,6 +1001,9 @@ var Admin = function (_Component) {
                 title: '',
                 details: '',
                 response: ''
+            },
+            track: {
+                name: ''
             }
         };
         return _this;
@@ -713,6 +1058,35 @@ var Admin = function (_Component) {
             });
         }
     }, {
+        key: 'updateTrack',
+        value: function updateTrack(event) {
+            event.preventDefault();
+            console.log('updateTrack: ' + event.target.id + ' == ' + event.target.value);
+            var updatedTrack = Object.assign({}, this.state.track);
+            updatedTrack[event.target.id] = event.target.value;
+            this.setState({
+                track: updatedTrack
+            });
+        }
+    }, {
+        key: 'submitTrack',
+        value: function submitTrack(event) {
+            var _this5 = this;
+
+            event.preventDefault();
+            console.log('to submitTrack: ' + JSON.stringify(this.state.track));
+            _utils.APIManager.post('/api/track', this.state.track, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+
+                console.log('track submitted: ' + JSON.stringify(response.result));
+                _this5.props.trackCreated(response.result);
+            });
+        }
+    }, {
         key: 'updateBug',
         value: function updateBug(event) {
             event.preventDefault();
@@ -727,7 +1101,7 @@ var Admin = function (_Component) {
     }, {
         key: 'submitBug',
         value: function submitBug(event) {
-            var _this5 = this;
+            var _this6 = this;
 
             event.preventDefault();
             var bug = this.state.bug;
@@ -742,7 +1116,7 @@ var Admin = function (_Component) {
                 }
                 console.log('submit: ' + JSON.stringify(response.result));
                 var result = response.result;
-                _this5.props.bugCreated(bug);
+                _this6.props.bugCreated(bug);
             });
         }
     }, {
@@ -767,11 +1141,19 @@ var Admin = function (_Component) {
                     ),
                     _react2.default.createElement('input', { onChange: this.updateBug.bind(this), type: 'text', id: 'title', placeholder: 'Title' }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.updateBug.bind(this), type: 'text', id: 'detail', placeholder: 'Detail' }),
+                    _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), type: 'text', id: 'detail', placeholder: 'Detail' }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.updateBug.bind(this), type: 'text', id: 'response', placeholder: 'Response' }),
+                    _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), type: 'text', id: 'response', placeholder: 'Response' }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onClick: this.submitBug.bind(this), type: 'submit', value: 'Submit' })
+                    _react2.default.createElement('input', { onClick: this.submitBug.bind(this), type: 'submit', value: 'Submit' }),
+                    _react2.default.createElement(
+                        'h3',
+                        null,
+                        'Create Track'
+                    ),
+                    _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'name', placeholder: 'Track Name' }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement('input', { onClick: this.submitTrack.bind(this), type: 'submit', value: 'Submit' })
                 )
             );
         }
@@ -797,6 +1179,9 @@ var dispatchToProps = function dispatchToProps(dispatch) {
         },
         bugCreated: function bugCreated(bug) {
             return dispatch(_actions2.default.bugCreated(bug));
+        },
+        trackCreated: function trackCreated(track) {
+            return dispatch(_actions2.default.trackCreated(track));
         }
     };
 };
@@ -804,16 +1189,16 @@ var dispatchToProps = function dispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Admin);
 
 /***/ }),
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
 /* 32 */,
 /* 33 */,
-/* 34 */
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -823,7 +1208,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _superagent = __webpack_require__(33);
+var _superagent = __webpack_require__(37);
 
 var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -865,7 +1250,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 35 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -881,9 +1266,9 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utils = __webpack_require__(6);
+var _utils = __webpack_require__(5);
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(4);
 
 var _actions2 = _interopRequireDefault(_actions);
 
@@ -976,7 +1361,7 @@ var dispatchToProps = function dispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Profiles);
 
 /***/ }),
-/* 36 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -985,29 +1370,34 @@ exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Profil
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Bugs = exports.Admin = exports.Profiles = undefined;
+exports.Tracks = exports.Bugs = exports.Admin = exports.Profiles = undefined;
 
-var _Profiles = __webpack_require__(35);
+var _Profiles = __webpack_require__(39);
 
 var _Profiles2 = _interopRequireDefault(_Profiles);
 
-var _Admin = __webpack_require__(24);
+var _Admin = __webpack_require__(28);
 
 var _Admin2 = _interopRequireDefault(_Admin);
 
-var _Bugs = __webpack_require__(50);
+var _Bugs = __webpack_require__(25);
 
 var _Bugs2 = _interopRequireDefault(_Bugs);
 
+var _Tracks = __webpack_require__(24);
+
+var _Tracks2 = _interopRequireDefault(_Tracks);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import Signup from './Signup'
 exports.Profiles = _Profiles2.default;
 exports.Admin = _Admin2.default;
 exports.Bugs = _Bugs2.default;
+exports.Tracks = _Tracks2.default;
+// import Signup from './Signup'
 
 /***/ }),
-/* 37 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1023,7 +1413,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _containers = __webpack_require__(36);
+var _containers = __webpack_require__(40);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1054,8 +1444,7 @@ var Home = function (_Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-md-3' },
-                        'Left',
-                        _react2.default.createElement(_containers.Profiles, null)
+                        _react2.default.createElement(_containers.Tracks, null)
                     ),
                     _react2.default.createElement(
                         'div',
@@ -1078,7 +1467,7 @@ var Home = function (_Component) {
 exports.default = Home;
 
 /***/ }),
-/* 38 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1089,7 +1478,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Home = undefined;
 
-var _Home = __webpack_require__(37);
+var _Home = __webpack_require__(41);
 
 var _Home2 = _interopRequireDefault(_Home);
 
@@ -1098,16 +1487,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.Home = _Home2.default;
 
 /***/ }),
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
 /* 43 */,
 /* 44 */,
 /* 45 */,
 /* 46 */,
 /* 47 */,
-/* 48 */
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1119,15 +1508,15 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(46);
+var _reactDom = __webpack_require__(50);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _layout = __webpack_require__(38);
+var _layout = __webpack_require__(42);
 
 var _reactRedux = __webpack_require__(2);
 
-var _store = __webpack_require__(21);
+var _store = __webpack_require__(23);
 
 var _store2 = _interopRequireDefault(_store);
 
@@ -1167,166 +1556,6 @@ var App = function (_Component) {
 }(_react.Component);
 
 _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
-
-/***/ }),
-/* 49 */,
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _actions = __webpack_require__(5);
-
-var _actions2 = _interopRequireDefault(_actions);
-
-var _reactRedux = __webpack_require__(2);
-
-var _utils = __webpack_require__(6);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import { Signup } from '../presentation'
-
-
-var Bugs = function (_Component) {
-	_inherits(Bugs, _Component);
-
-	function Bugs() {
-		_classCallCheck(this, Bugs);
-
-		var _this = _possibleConstructorReturn(this, (Bugs.__proto__ || Object.getPrototypeOf(Bugs)).call(this));
-
-		_this.state = {
-			bugs: []
-		};
-		return _this;
-	}
-
-	_createClass(Bugs, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			var _this2 = this;
-
-			// console.log('componentDidMount: ')
-			_utils.APIManager.get('/api/bug', null, function (err, response) {
-				if (err) {
-					var msg = err.message || err;
-					alert(msg);
-					return;
-				}
-
-				console.log(JSON.stringify(response.results));
-				var results = response.results;
-				// this.setState({
-				// 	bugs: results
-				// })
-				_this2.props.bugsReceived(results);
-			});
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			var bugs = this.props.bugs.map(function (bug, i) {
-				return _react2.default.createElement(
-					'li',
-					{ key: i },
-					bug.title
-				);
-			});
-
-			return _react2.default.createElement(
-				'div',
-				null,
-				'This is Bugs List:',
-				_react2.default.createElement(
-					'ol',
-					null,
-					bugs
-				)
-			);
-		}
-	}]);
-
-	return Bugs;
-}(_react.Component);
-
-var stateToProps = function stateToProps(state) {
-	return {
-		bugs: state.bug.list
-	};
-};
-
-var dispatchToProps = function dispatchToProps(dispatch) {
-	return {
-		bugsReceived: function bugsReceived(bugs) {
-			return dispatch(_actions2.default.bugsReceived(bugs));
-		}
-
-	};
-};
-
-exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Bugs);
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _constants = __webpack_require__(4);
-
-var _constants2 = _interopRequireDefault(_constants);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var initialState = {
-
-    list: []
-
-};
-
-exports.default = function () {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-    var action = arguments[1];
-
-    var updated = Object.assign({}, state);
-    switch (action.type) {
-        case _constants2.default.BUGS_RECEIVED:
-            console.log('BUGS_RECEIVED: ' + JSON.stringify(action.bugs));
-            updated['list'] = action.bugs;
-            return updated;
-
-        case _constants2.default.BUG_CREATED:
-            var updatedList = Object.assign([], updated.list);
-            updatedList.push(action.bug);
-            updated['list'] = updatedList;
-            return updated;
-
-        default:
-            return state;
-    }
-};
 
 /***/ })
 /******/ ]);

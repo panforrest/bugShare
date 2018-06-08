@@ -13,6 +13,9 @@ class Admin extends Component {
                 title: '',
                 details: '',
                 response: ''
+            },
+            track: {
+                name: ''
             }
         }
     }
@@ -56,6 +59,31 @@ class Admin extends Component {
         })
     }
 
+    updateTrack(event){
+        event.preventDefault()
+        console.log('updateTrack: '+event.target.id+' == '+event.target.value)
+        var updatedTrack = Object.assign({}, this.state.track)
+        updatedTrack[event.target.id] = event.target.value
+        this.setState({
+            track: updatedTrack
+        })
+    }
+
+    submitTrack(event){
+        event.preventDefault()
+        console.log('to submitTrack: '+JSON.stringify(this.state.track))
+        APIManager.post('/api/track', this.state.track, (err, response) => {
+            if (err){
+                const msg = err.message || err
+                alert(msg)
+                return
+            }
+
+            console.log('track submitted: '+JSON.stringify(response.result))
+            this.props.trackCreated(response.result)
+        })
+    }    
+
     updateBug(event){
         event.preventDefault()
         // console.log(event.target.id+" == "+event.target.value)
@@ -94,9 +122,13 @@ class Admin extends Component {
 
                         <h3>Create Bug</h3>
                         <input onChange={this.updateBug.bind(this)} type="text" id="title" placeholder="Title" /><br />
-                        <input onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
-                        <input onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
+                        <textarea onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
+                        <textarea onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
                         <input onClick={this.submitBug.bind(this)} type="submit" value="Submit" />
+
+                        <h3>Create Track</h3>
+                        <input onChange={this.updateTrack.bind(this)} type="text" id="name" placeholder="Track Name" /><br />
+                        <input onClick={this.submitTrack.bind(this)} type="submit" value="Submit" />
                     </div>
                 }    
     		</div>
@@ -115,7 +147,8 @@ const dispatchToProps = (dispatch) => {
     return {
         profileCreated: (profile) => dispatch(actions.profileCreated(profile)),
         currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile)),
-        bugCreated: (bug) => dispatch(actions.bugCreated(bug))
+        bugCreated: (bug) => dispatch(actions.bugCreated(bug)),
+        trackCreated: (track) => dispatch(actions.trackCreated(track))
     }
 }
 
