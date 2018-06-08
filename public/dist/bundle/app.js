@@ -135,7 +135,7 @@
 /******/
 /******/
 /******/ 	// add entry module to deferred list
-/******/ 	deferredModules.push([47,0]);
+/******/ 	deferredModules.push([48,0]);
 /******/ 	// run deferred modules when ready
 /******/ 	return checkDeferredModules();
 /******/ })
@@ -204,12 +204,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -220,7 +215,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.APIManager = undefined;
 
-var _APIManager = __webpack_require__(33);
+var _APIManager = __webpack_require__(34);
 
 var _APIManager2 = _interopRequireDefault(_APIManager);
 
@@ -229,6 +224,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.APIManager = _APIManager2.default;
 
 /***/ }),
+/* 7 */,
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
 /* 12 */,
 /* 13 */,
 /* 14 */,
@@ -401,6 +401,202 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = __webpack_require__(6);
+
+var _actions = __webpack_require__(5);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _reactRedux = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Signup = function (_Component) {
+  _inherits(Signup, _Component);
+
+  function Signup() {
+    _classCallCheck(this, Signup);
+
+    var _this = _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).call(this));
+
+    _this.state = {
+      visitor: {
+        email: '',
+        firstName: '',
+        lastName: '',
+        password: ''
+      }
+    };
+    return _this;
+  }
+
+  _createClass(Signup, [{
+    key: 'update',
+    value: function update(event) {
+      // console.log('updateProfile: ')
+      event.preventDefault();
+      // console.log(event.target.id+' == '+JSON.stringify(event.target.value))    //FORGOT target
+      var updated = Object.assign({}, this.state.visitor); //var updated = Object.assign({}, this.state)//[]
+      updated[event.target.id] = event.target.value;
+      this.setState({
+        visitor: updated
+      });
+      console.log(JSON.stringify(this.state.visitor));
+    }
+  }, {
+    key: 'register',
+    value: function register(event) {
+      // event.preventDefault()
+      //       // console.log('register: ')
+      //       // APIManager.post('/api/profile', this.state.visitor, (err, response) => {
+      //       APIManager.post('/account/register', this.state.visitor, (err, response) => {
+      //           if (err) {
+      //           	const msg = err.message || err
+      //               alert(msg)
+      //           	return
+      //           }
+
+      //           console.log('register: '+JSON.stringify(response))
+      //           var result = response.profile  //var result = response.result
+      //           this.props.profileCreated(result)
+      //       })
+      this.props.onRegister(this.state.visitor);
+    }
+  }, {
+    key: 'login',
+    value: function login(event) {
+      // event.preventDefault()
+      // APIManager.post('/account/login', this.state.visitor, (err, response) => {
+      //     if (err) {
+      //         const msg = err.message || err
+      //         // console.log(msg)
+      //         alert(msg)
+      //         return
+      //     }
+
+      //     console.log(JSON.stringify(response))
+      //     var result = response.profile
+      //     this.props.currentUserReceived(result)
+      // })
+      this.props.onLogin(this.state.visitor);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        null,
+        this.props.currentUser != null ? _react2.default.createElement(
+          'p',
+          null,
+          'Welcome, ',
+          this.props.currentUser.email
+        ) : _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Sign up'
+          ),
+          _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.register.bind(this) },
+            'Submit'
+          ),
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Log in'
+          ),
+          _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.login.bind(this) },
+            'Submit'
+          )
+        )
+      );
+    }
+  }]);
+
+  return Signup;
+}(_react.Component);
+
+var stateToProps = function stateToProps(state) {
+  return {
+    profile: state.profile.user,
+    currentUser: state.account.currentUser
+  };
+};
+
+var dispatchToProps = function dispatchToProps(dispatch) {
+  return {
+    profileCreated: function profileCreated(profile) {
+      return dispatch(_actions2.default.profileCreated(profile));
+    },
+    currentUserReceived: function currentUserReceived(profile) {
+      return dispatch(_actions2.default.currentUserReceived(profile));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Signup);
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Signup = undefined;
+
+var _Signup = __webpack_require__(22);
+
+var _Signup2 = _interopRequireDefault(_Signup);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.Signup = _Signup2.default;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
@@ -416,11 +612,9 @@ var _actions2 = _interopRequireDefault(_actions);
 
 var _reactRedux = __webpack_require__(2);
 
-var _Signup = __webpack_require__(23);
+var _presentation = __webpack_require__(23);
 
-var _Signup2 = _interopRequireDefault(_Signup);
-
-var _utils = __webpack_require__(11);
+var _utils = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -436,13 +630,49 @@ var Admin = function (_Component) {
     function Admin() {
         _classCallCheck(this, Admin);
 
-        return _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Admin.__proto__ || Object.getPrototypeOf(Admin)).call(this));
+
+        _this.state;
+        return _this;
     }
 
     _createClass(Admin, [{
+        key: 'register',
+        value: function register(visitor) {
+            var _this2 = this;
+
+            _utils.APIManager.post('/account/register', visitor, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+
+                console.log('register: ' + JSON.stringify(response));
+                _this2.props.profileCreated(response.profile);
+            });
+        }
+    }, {
+        key: 'login',
+        value: function login(credentials) {
+            var _this3 = this;
+
+            _utils.APIManager.post('/account/login', credentials, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    // console.log(msg)
+                    alert(msg);
+                    return;
+                }
+
+                console.log(JSON.stringify(response));
+                _this3.props.currentUserReceived(response.profile);
+            });
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
+            var _this4 = this;
 
             _utils.APIManager.get('/account/currentuser', null, function (err, response) {
                 if (err) {
@@ -451,7 +681,22 @@ var Admin = function (_Component) {
                     return;
                 }
                 console.log('Admin.js: ' + JSON.stringify(response.profile));
-                _this2.props.currentUserReceived(response.profile);
+                _this4.props.currentUserReceived(response.profile);
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this5 = this;
+
+            _utils.APIManager.get('/account/currentuser', null, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+                console.log('Admin.js: ' + JSON.stringify(response.profile));
+                _this5.props.currentUserReceived(response.profile);
             });
         }
     }, {
@@ -460,12 +705,12 @@ var Admin = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                this.props.currentUser != null ? _react2.default.createElement(
+                this.props.currentUser == null ? _react2.default.createElement(_presentation.Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) }) : _react2.default.createElement(
                     'h2',
                     null,
                     'Welcome, ',
                     this.props.currentUser.email
-                ) : _react2.default.createElement(_Signup2.default, null)
+                )
             );
         }
     }]);
@@ -494,185 +739,6 @@ var dispatchToProps = function dispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Admin);
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(0);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _utils = __webpack_require__(11);
-
-var _actions = __webpack_require__(5);
-
-var _actions2 = _interopRequireDefault(_actions);
-
-var _reactRedux = __webpack_require__(2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Signup = function (_Component) {
-    _inherits(Signup, _Component);
-
-    function Signup() {
-        _classCallCheck(this, Signup);
-
-        var _this = _possibleConstructorReturn(this, (Signup.__proto__ || Object.getPrototypeOf(Signup)).call(this));
-
-        _this.state = {
-            visitor: {
-                email: '',
-                firstName: '',
-                lastName: '',
-                password: ''
-            }
-        };
-        return _this;
-    }
-
-    _createClass(Signup, [{
-        key: 'update',
-        value: function update(event) {
-            // console.log('updateProfile: ')
-            event.preventDefault();
-            // console.log(event.target.id+' == '+JSON.stringify(event.target.value))    //FORGOT target
-            var updated = Object.assign({}, this.state.visitor); //var updated = Object.assign({}, this.state)//[]
-            updated[event.target.id] = event.target.value;
-            this.setState({
-                visitor: updated
-            });
-            console.log(JSON.stringify(this.state.visitor));
-        }
-    }, {
-        key: 'register',
-        value: function register(event) {
-            var _this2 = this;
-
-            event.preventDefault();
-            // console.log('register: ')
-            // APIManager.post('/api/profile', this.state.visitor, (err, response) => {
-            _utils.APIManager.post('/account/register', this.state.visitor, function (err, response) {
-                if (err) {
-                    var msg = err.message || err;
-                    alert(msg);
-                    return;
-                }
-
-                console.log('register: ' + JSON.stringify(response));
-                var result = response.profile; //var result = response.result
-                _this2.props.profileCreated(result);
-            });
-        }
-    }, {
-        key: 'login',
-        value: function login(event) {
-            var _this3 = this;
-
-            event.preventDefault();
-            _utils.APIManager.post('/account/login', this.state.visitor, function (err, response) {
-                if (err) {
-                    var msg = err.message || err;
-                    // console.log(msg)
-                    alert(msg);
-                    return;
-                }
-
-                console.log(JSON.stringify(response));
-                var result = response.profile;
-                _this3.props.currentUserReceived(result);
-            });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return _react2.default.createElement(
-                'div',
-                null,
-                this.props.currentUser != null ? _react2.default.createElement(
-                    'h2',
-                    null,
-                    'Welcome, ',
-                    this.props.currentUser.email
-                ) : _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'h2',
-                        null,
-                        'Sign up'
-                    ),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: this.register.bind(this) },
-                        'Submit'
-                    ),
-                    _react2.default.createElement(
-                        'h2',
-                        null,
-                        'Log in'
-                    ),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'password', placeholder: 'Password' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: this.login.bind(this) },
-                        'Submit'
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Signup;
-}(_react.Component);
-
-var stateToProps = function stateToProps(state) {
-    return {
-        profile: state.profile.user,
-        currentUser: state.account.currentUser
-    };
-};
-
-var dispatchToProps = function dispatchToProps(dispatch) {
-    return {
-        profileCreated: function profileCreated(profile) {
-            return dispatch(_actions2.default.profileCreated(profile));
-        },
-        currentUserReceived: function currentUserReceived(profile) {
-            return dispatch(_actions2.default.currentUserReceived(profile));
-        }
-    };
-};
-
-exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Signup);
-
-/***/ }),
-/* 24 */,
 /* 25 */,
 /* 26 */,
 /* 27 */,
@@ -681,7 +747,8 @@ exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Signup
 /* 30 */,
 /* 31 */,
 /* 32 */,
-/* 33 */
+/* 33 */,
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -691,7 +758,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _superagent = __webpack_require__(32);
+var _superagent = __webpack_require__(33);
 
 var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -733,7 +800,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -749,7 +816,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _utils = __webpack_require__(11);
+var _utils = __webpack_require__(6);
 
 var _actions = __webpack_require__(5);
 
@@ -844,7 +911,7 @@ var dispatchToProps = function dispatchToProps(dispatch) {
 exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Profiles);
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -853,28 +920,24 @@ exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Profil
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Admin = exports.Signup = exports.Profiles = undefined;
+exports.Admin = exports.Profiles = undefined;
 
-var _Profiles = __webpack_require__(34);
+var _Profiles = __webpack_require__(35);
 
 var _Profiles2 = _interopRequireDefault(_Profiles);
 
-var _Signup = __webpack_require__(23);
-
-var _Signup2 = _interopRequireDefault(_Signup);
-
-var _Admin = __webpack_require__(22);
+var _Admin = __webpack_require__(24);
 
 var _Admin2 = _interopRequireDefault(_Admin);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Profiles = _Profiles2.default;
-exports.Signup = _Signup2.default;
 exports.Admin = _Admin2.default;
+// import Signup from './Signup'
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -890,7 +953,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _containers = __webpack_require__(35);
+var _containers = __webpack_require__(36);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -945,7 +1008,7 @@ var Home = function (_Component) {
 exports.default = Home;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -956,7 +1019,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Home = undefined;
 
-var _Home = __webpack_require__(36);
+var _Home = __webpack_require__(37);
 
 var _Home2 = _interopRequireDefault(_Home);
 
@@ -965,7 +1028,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.Home = _Home2.default;
 
 /***/ }),
-/* 38 */,
 /* 39 */,
 /* 40 */,
 /* 41 */,
@@ -974,7 +1036,8 @@ exports.Home = _Home2.default;
 /* 44 */,
 /* 45 */,
 /* 46 */,
-/* 47 */
+/* 47 */,
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -986,11 +1049,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(45);
+var _reactDom = __webpack_require__(46);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _layout = __webpack_require__(37);
+var _layout = __webpack_require__(38);
 
 var _reactRedux = __webpack_require__(2);
 

@@ -29,42 +29,44 @@ class Signup extends Component {
 	}
 
 	register(event){
-		event.preventDefault()
-        // console.log('register: ')
-        // APIManager.post('/api/profile', this.state.visitor, (err, response) => {
-        APIManager.post('/account/register', this.state.visitor, (err, response) => {
-            if (err) {
-            	const msg = err.message || err
-                alert(msg)
-            	return
-            }
+		// event.preventDefault()
+  //       // console.log('register: ')
+  //       // APIManager.post('/api/profile', this.state.visitor, (err, response) => {
+  //       APIManager.post('/account/register', this.state.visitor, (err, response) => {
+  //           if (err) {
+  //           	const msg = err.message || err
+  //               alert(msg)
+  //           	return
+  //           }
 
-            console.log('register: '+JSON.stringify(response))
-            var result = response.profile  //var result = response.result
-            this.props.profileCreated(result)
-        })
+  //           console.log('register: '+JSON.stringify(response))
+  //           var result = response.profile  //var result = response.result
+  //           this.props.profileCreated(result)
+  //       })
+        this.props.onRegister(this.state.visitor)
 	}
 
     login(event){
-        event.preventDefault()
-        APIManager.post('/account/login', this.state.visitor, (err, response) => {
-            if (err) {
-                const msg = err.message || err
-                // console.log(msg)
-                alert(msg)
-                return
-            }
+        // event.preventDefault()
+        // APIManager.post('/account/login', this.state.visitor, (err, response) => {
+        //     if (err) {
+        //         const msg = err.message || err
+        //         // console.log(msg)
+        //         alert(msg)
+        //         return
+        //     }
 
-            console.log(JSON.stringify(response))
-            var result = response.profile
-            this.props.currentUserReceived(result)
-        })
+        //     console.log(JSON.stringify(response))
+        //     var result = response.profile
+        //     this.props.currentUserReceived(result)
+        // })
+        this.props.onLogin(this.state.visitor)
     }
 
 	render(){
 		return(
 			<div>
-                {(this.props.currentUser != null) ? <h2>Welcome, {this.props.currentUser.email}</h2> : 
+                {(this.props.currentUser != null) ? <p>Welcome, {this.props.currentUser.email}</p> : 
                 <div>
     			    <h2>Sign up</h2>
                     <input onChange={this.update.bind(this)} type='text' id='email' placeholder='Email' /><br />
