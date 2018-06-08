@@ -158,7 +158,9 @@ exports.default = { //export {
 
     PROFILES_RECEIVED: 'PROFILES_RECEIVED',
     PROFILE_CREATED: 'PROFILE_CREATED',
-    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED'
+    CURRENT_USER_RECEIVED: 'CURRENT_USER_RECEIVED',
+    BUGS_RECEIVED: 'BUGS_RECEIVED',
+    BUG_CREATED: 'BUG_CREATED'
 
 };
 
@@ -199,6 +201,20 @@ exports.default = {
         return {
             type: _constants2.default.CURRENT_USER_RECEIVED,
             profile: profile
+        };
+    },
+
+    bugsReceived: function bugsReceived(bugs) {
+        return {
+            type: _constants2.default.BUGS_RECEIVED,
+            bugs: bugs
+        };
+    },
+
+    bugCreated: function bugCreated(bug) {
+        return {
+            type: _constants2.default.BUG_CREATED,
+            bug: bug
         };
     }
 };
@@ -333,7 +349,7 @@ exports.default = function () {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.accountReducer = exports.profileReducer = undefined;
+exports.bugReducer = exports.accountReducer = exports.profileReducer = undefined;
 
 var _profileReducer = __webpack_require__(18);
 
@@ -343,10 +359,15 @@ var _accountReducer = __webpack_require__(17);
 
 var _accountReducer2 = _interopRequireDefault(_accountReducer);
 
+var _bugReducer = __webpack_require__(51);
+
+var _bugReducer2 = _interopRequireDefault(_bugReducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.profileReducer = _profileReducer2.default;
 exports.accountReducer = _accountReducer2.default;
+exports.bugReducer = _bugReducer2.default;
 
 /***/ }),
 /* 20 */,
@@ -380,7 +401,8 @@ exports.default = {
 
         var reducers = (0, _redux.combineReducers)({
             profile: _reducers.profileReducer,
-            account: _reducers.accountReducer
+            account: _reducers.accountReducer,
+            bug: _reducers.bugReducer
         }),
             store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)());
 
@@ -705,6 +727,8 @@ var Admin = function (_Component) {
     }, {
         key: 'submitBug',
         value: function submitBug(event) {
+            var _this5 = this;
+
             event.preventDefault();
             var bug = this.state.bug;
             bug['profile'] = this.props.currentUser.id;
@@ -717,6 +741,8 @@ var Admin = function (_Component) {
                     return;
                 }
                 console.log('submit: ' + JSON.stringify(response.result));
+                var result = response.result;
+                _this5.props.bugCreated(bug);
             });
         }
     }, {
@@ -768,6 +794,9 @@ var dispatchToProps = function dispatchToProps(dispatch) {
         },
         currentUserReceived: function currentUserReceived(profile) {
             return dispatch(_actions2.default.currentUserReceived(profile));
+        },
+        bugCreated: function bugCreated(bug) {
+            return dispatch(_actions2.default.bugCreated(bug));
         }
     };
 };
@@ -1157,6 +1186,12 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _actions = __webpack_require__(5);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _reactRedux = __webpack_require__(2);
+
 var _utils = __webpack_require__(6);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1166,6 +1201,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+// import { Signup } from '../presentation'
+
 
 var Bugs = function (_Component) {
 	_inherits(Bugs, _Component);
@@ -1196,18 +1233,19 @@ var Bugs = function (_Component) {
 
 				console.log(JSON.stringify(response.results));
 				var results = response.results;
-				_this2.setState({
-					bugs: results
-				});
+				// this.setState({
+				// 	bugs: results
+				// })
+				_this2.props.bugsReceived(results);
 			});
 		}
 	}, {
 		key: 'render',
 		value: function render() {
-			var bugs = this.state.bugs.map(function (bug, i) {
+			var bugs = this.props.bugs.map(function (bug, i) {
 				return _react2.default.createElement(
 					'li',
-					{ key: bug.id },
+					{ key: i },
 					bug.title
 				);
 			});
@@ -1216,7 +1254,11 @@ var Bugs = function (_Component) {
 				'div',
 				null,
 				'This is Bugs List:',
-				bugs
+				_react2.default.createElement(
+					'ol',
+					null,
+					bugs
+				)
 			);
 		}
 	}]);
@@ -1224,7 +1266,67 @@ var Bugs = function (_Component) {
 	return Bugs;
 }(_react.Component);
 
-exports.default = Bugs;
+var stateToProps = function stateToProps(state) {
+	return {
+		bugs: state.bug.list
+	};
+};
+
+var dispatchToProps = function dispatchToProps(dispatch) {
+	return {
+		bugsReceived: function bugsReceived(bugs) {
+			return dispatch(_actions2.default.bugsReceived(bugs));
+		}
+
+	};
+};
+
+exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Bugs);
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _constants = __webpack_require__(4);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var initialState = {
+
+    list: []
+
+};
+
+exports.default = function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+    var action = arguments[1];
+
+    var updated = Object.assign({}, state);
+    switch (action.type) {
+        case _constants2.default.BUGS_RECEIVED:
+            console.log('BUGS_RECEIVED: ' + JSON.stringify(action.bugs));
+            updated['list'] = action.bugs;
+            return updated;
+
+        case _constants2.default.BUG_CREATED:
+            var updatedList = Object.assign([], updated.list);
+            updatedList.push(action.bug);
+            updated['list'] = updatedList;
+            return updated;
+
+        default:
+            return state;
+    }
+};
 
 /***/ })
 /******/ ]);

@@ -80,6 +80,8 @@ class Admin extends Component {
                 return
             }
             console.log('submit: '+JSON.stringify(response.result))
+            var result = response.result
+            this.props.bugCreated(bug)
         })
     }    
 
@@ -112,7 +114,8 @@ const stateToProps = (state) => {
 const dispatchToProps = (dispatch) => {
     return {
         profileCreated: (profile) => dispatch(actions.profileCreated(profile)),
-        currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile))
+        currentUserReceived: (profile) => dispatch(actions.currentUserReceived(profile)),
+        bugCreated: (bug) => dispatch(actions.bugCreated(bug))
     }
 }
 
