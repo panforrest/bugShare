@@ -56,7 +56,7 @@ class Track extends Component {
             }
 
             console.log(JSON.stringify(response.results))
-
+            this.props.bugsReceived(response.results)
         })
     }
 
@@ -92,8 +92,15 @@ class Track extends Component {
 
     }
 
-
     render(){
+        var bugList = this.props.bugs.map((bug, i) => {
+            return (
+                <a key={i} href="#" className="list-group-item">
+                        <h4 className="list-group-item-heading">{bug.title}</h4>
+                        <p className="list-group-item-text">{bug.detail}</p>
+                </a> 
+            )
+        })
         return(
             <div>
 
@@ -109,21 +116,8 @@ class Track extends Component {
                                 <textarea onChange={this.updateBug.bind(this)} placeholder="Response" id="response" className="form-control"></textarea><br /> 
                                 <button onClick={this.submitBug.bind(this)} className="btn btn-success">Record Bug</button><br />
                                 <hr style={{borderTop: '1px solid red #444'}} />
+                                {bugList}
 
-                                <div className="list-group">
-                                    <a href="#" className="list-group-item">
-                                        <h4 className="list-group-item-heading">List group item heading</h4>
-                                        <p className="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.</p>
-                                    </a>
-                                    <a href="#" className="list-group-item">
-                                        <h4 className="list-group-item-heading">List group item heading</h4>
-                                        <p className="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.</p>
-                                    </a>
-                                    <a href="#" className="list-group-item">
-                                        <h4 className="list-group-item-heading">List group item heading</h4>
-                                        <p className="list-group-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.</p>
-                                    </a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -139,14 +133,16 @@ const stateToProps = (state) => {
     var tracksArray = state.track.list
 
     return {
-        track: (tracksArray.length == 0) ? {name:''} : tracksArray[0] 
+        track: (tracksArray.length == 0) ? {name:''} : tracksArray[0],
+        bugs: state.bug.list 
     }
 }
 
 const dispatchToProps = (dispatch) => {
     return {
         tracksReceived: (tracks) => dispatch(actions.tracksReceived(tracks)),
-        bugCreated: (bug) => dispatch(actions.bugCreated(bug))
+        bugCreated: (bug) => dispatch(actions.bugCreated(bug)),
+        bugsReceived: (bugs) => dispatch(actions.bugsReceived(bugs))
     }
 }
 

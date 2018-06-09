@@ -66,6 +66,7 @@ var Track = (function (Component) {
         },
         fetchPosts: {
             value: function fetchPosts() {
+                var _this = this;
                 console.log("fetchPosts: ");
                 console.log(JSON.stringify(this.props.track._id));
                 if (this.props.track._id == null) {
@@ -81,6 +82,7 @@ var Track = (function (Component) {
                     }
 
                     console.log(JSON.stringify(response.results));
+                    _this.props.bugsReceived(response.results);
                 });
             },
             writable: true,
@@ -125,6 +127,22 @@ var Track = (function (Component) {
         },
         render: {
             value: function render() {
+                var bugList = this.props.bugs.map(function (bug, i) {
+                    return React.createElement(
+                        "a",
+                        { key: i, href: "#", className: "list-group-item" },
+                        React.createElement(
+                            "h4",
+                            { className: "list-group-item-heading" },
+                            bug.title
+                        ),
+                        React.createElement(
+                            "p",
+                            { className: "list-group-item-text" },
+                            bug.detail
+                        )
+                    );
+                });
                 return React.createElement(
                     "div",
                     null,
@@ -158,52 +176,7 @@ var Track = (function (Component) {
                                     ),
                                     React.createElement("br", null),
                                     React.createElement("hr", { style: { borderTop: "1px solid red #444" } }),
-                                    React.createElement(
-                                        "div",
-                                        { className: "list-group" },
-                                        React.createElement(
-                                            "a",
-                                            { href: "#", className: "list-group-item" },
-                                            React.createElement(
-                                                "h4",
-                                                { className: "list-group-item-heading" },
-                                                "List group item heading"
-                                            ),
-                                            React.createElement(
-                                                "p",
-                                                { className: "list-group-item-text" },
-                                                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio."
-                                            )
-                                        ),
-                                        React.createElement(
-                                            "a",
-                                            { href: "#", className: "list-group-item" },
-                                            React.createElement(
-                                                "h4",
-                                                { className: "list-group-item-heading" },
-                                                "List group item heading"
-                                            ),
-                                            React.createElement(
-                                                "p",
-                                                { className: "list-group-item-text" },
-                                                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio."
-                                            )
-                                        ),
-                                        React.createElement(
-                                            "a",
-                                            { href: "#", className: "list-group-item" },
-                                            React.createElement(
-                                                "h4",
-                                                { className: "list-group-item-heading" },
-                                                "List group item heading"
-                                            ),
-                                            React.createElement(
-                                                "p",
-                                                { className: "list-group-item-text" },
-                                                "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, sit, reiciendis expedita voluptate fuga perferendis soluta doloribus quasi quia odio."
-                                            )
-                                        )
-                                    )
+                                    bugList
                                 )
                             )
                         )
@@ -223,7 +196,8 @@ var stateToProps = function (state) {
     var tracksArray = state.track.list;
 
     return {
-        track: tracksArray.length == 0 ? { name: "" } : tracksArray[0]
+        track: tracksArray.length == 0 ? { name: "" } : tracksArray[0],
+        bugs: state.bug.list
     };
 };
 
@@ -234,6 +208,9 @@ var dispatchToProps = function (dispatch) {
         },
         bugCreated: function (bug) {
             return dispatch(actions.bugCreated(bug));
+        },
+        bugsReceived: function (bugs) {
+            return dispatch(actions.bugsReceived(bugs));
         }
     };
 };
