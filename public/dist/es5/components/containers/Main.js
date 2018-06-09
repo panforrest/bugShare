@@ -17,10 +17,13 @@ var React = _interopRequire(_react);
 var Component = _react.Component;
 var Tracks = _interopRequire(require("./Tracks"));
 
-var Admin = _interopRequire(require("./Admin"));
+var Nav = _interopRequire(require("./Nav"));
 
-var Track = _interopRequire(require("../layout/Track"));
+var _layout = require("../layout/");
 
+var Track = _layout.Track;
+var Register = _layout.Register;
+var Account = _layout.Account;
 // import { Track } from '../layout'
 
 var Main = (function (Component) {
@@ -49,15 +52,19 @@ var Main = (function (Component) {
                 if (page == "home") content = React.createElement(
                     "div",
                     null,
-                    React.createElement(Tracks, null),
-                    React.createElement(Admin, null)
+                    React.createElement(Tracks, null)
                 );
 
                 if (page == "track") content = React.createElement(Track, { slug: this.props.slug });
 
+                if (page == "register") content = React.createElement(Register, null);
+
+                if (page == "account") content = React.createElement(Account, null);
+
                 return React.createElement(
                     "div",
                     null,
+                    React.createElement(Nav, null),
                     content
                 );
             },

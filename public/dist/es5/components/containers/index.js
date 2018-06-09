@@ -13,11 +13,14 @@ var Tracks = _interopRequire(require("./Tracks"));
 
 var Main = _interopRequire(require("./Main"));
 
+var Nav = _interopRequire(require("./Nav"));
+
 exports.Profiles = Profiles;
 exports.Admin = Admin;
 exports.Bugs = Bugs;
 exports.Tracks = Tracks;
 exports.Main = Main;
+exports.Nav = Nav;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });

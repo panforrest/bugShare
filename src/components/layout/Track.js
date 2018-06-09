@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {APIManager} from '../../utils' 
+import { Nav } from '../containers'
 
 class Track extends Component {
     constructor(){
@@ -32,6 +33,10 @@ class Track extends Component {
 		return(
 			<div>
 			    <h2>This is {this.state.track.name}</h2>
+                <ol>
+                    <li>Bug1</li>
+                    <li>Bug2</li>
+                </ol>
 			</div>
 		)
 	}

@@ -4,6 +4,7 @@ import Admin from './Admin'
 import Bugs from './Bugs'
 import Tracks from './Tracks'
 import Main from './Main'
+import Nav from './Nav'
 
 export {  //export default {
 
@@ -12,6 +13,7 @@ export {  //export default {
     Admin,
     Bugs,
     Tracks, 
-    Main
+    Main,
+    Nav
 
 }
