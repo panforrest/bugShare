@@ -1005,7 +1005,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <h2>User is not logged in. </h2>
+// export default connect(stateToProps, dispatchToProps)(Admin)
+
 
 var Admin = function (_Component) {
     _inherits(Admin, _Component);
@@ -1022,7 +1024,8 @@ var Admin = function (_Component) {
                 response: ''
             },
             track: {
-                name: ''
+                name: '',
+                slug: ''
             }
         };
         return _this;
@@ -1094,10 +1097,25 @@ var Admin = function (_Component) {
 
             event.preventDefault();
             console.log('to submitTrack: ' + JSON.stringify(this.state.track));
-            _utils.APIManager.post('/api/track', this.state.track, function (err, response) {
+            var track = this.state.track;
+            var name = track.name;
+            var parts = name.split(' ');
+
+            var slug = '';
+            for (var i = 0; i < parts.length; i++) {
+                var word = parts[i];
+                slug += word;
+                if (i != parts.length - 1) slug += '-';
+            }
+
+            // slug = slug.repalce('?', '-')
+            track['slug'] = slug;
+            console.log(JSON.stringify(track));
+
+            _utils.APIManager.post('/api/track', track, function (err, response) {
                 if (err) {
                     var msg = err.message || err;
-                    alert(msg);
+                    alert(JSON.stringify(msg));
                     return;
                 }
 

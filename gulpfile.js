@@ -5,24 +5,24 @@ var gulp = require('gulp')
     to5 = require('gulp-6to5');
 
 gulp.task('es6-es5', function(){
-	return gulp.src([
-				'./src/ServerApp.js',
-				'./src/*/**.js',
-				'./src/*/*/**.js'
-			]
-		)
-		.pipe(to5())
-		.pipe(gulp.dest('./public/dist/es5/'));
+    return gulp.src([
+                './src/ServerApp.js',
+                './src/*/**.js',
+                './src/*/*/**.js'
+            ]
+        )
+        .pipe(to5())
+        .pipe(gulp.dest('./public/dist/es5/'));
 });
 
 gulp.task('build', function(){
     return gulp.src(
-    		[
-				'./public/js/jquery.js',
-				'./public/js/plugins.js',
-				'./public/js/functions.js'
-    		]
-    	)
+            [
+                './public/js/jquery.js',
+                './public/js/plugins.js',
+                './public/js/functions.js'
+            ]
+        )
         .pipe(gp_concat('gulp-concat.js'))
         .pipe(gulp.dest('./public/min/'))
         .pipe(gp_rename('vendor.min.js'))

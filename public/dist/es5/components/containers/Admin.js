@@ -10,6 +10,8 @@ var _inherits = function (subClass, superClass) { if (typeof superClass !== "fun
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
+// <h2>User is not logged in. </h2>
+// export default connect(stateToProps, dispatchToProps)(Admin)
 var _react = require("react");
 
 var React = _interopRequire(_react);
@@ -32,7 +34,8 @@ var Admin = (function (Component) {
                 response: ""
             },
             track: {
-                name: ""
+                name: "",
+                slug: ""
             }
         };
     }
@@ -109,10 +112,25 @@ var Admin = (function (Component) {
                 var _this = this;
                 event.preventDefault();
                 console.log("to submitTrack: " + JSON.stringify(this.state.track));
-                APIManager.post("/api/track", this.state.track, function (err, response) {
+                var track = this.state.track;
+                var name = track.name;
+                var parts = name.split(" ");
+
+                var slug = "";
+                for (var i = 0; i < parts.length; i++) {
+                    var word = parts[i];
+                    slug += word;
+                    if (i != parts.length - 1) slug += "-";
+                }
+
+                // slug = slug.repalce('?', '-')
+                track.slug = slug;
+                console.log(JSON.stringify(track));
+
+                APIManager.post("/api/track", track, function (err, response) {
                     if (err) {
                         var msg = err.message || err;
-                        alert(msg);
+                        alert(JSON.stringify(msg));
                         return;
                     }
 
