@@ -1,46 +1,47 @@
-import { createStore, combineReducers, applyMiddleware} from 'redux'
-import thunk from 'redux-thunk'
 import { profileReducer, accountReducer, bugReducer, trackReducer } from '../reducers'
+import { applyMiddleware, createStore, combineReducers } from 'redux'  //'react-redux'
+import thunk from 'redux-thunk'   //{ thunk }
 
 // var store;
 
 // export default {
-// // configureStore
-// // combineReducer
 
-//     configureStore: () => {
-    	
-//     	const reducers = combineReducers({
-//     		profile: profileReducer,
-//             account: accountReducer,
-//             bug: bugReducer,
-//             track: trackReducer
-//     	}),
+//     configureStore: () => {  //configureStore = () => {
+ 
+// 	    const reducers = combineReducers({
 
-//     	store = createStore(
-//     		reducers,
-//     		applyMiddleware()
-//     	)
+// 	    	profile: profileReducer,
+// 	    	account: accountReducer,
+// 	    	bug: bugReducer,
+// 	    	track: trackReducer
 
+// 	    }),
 
-//     	return store
-//     },
+// 	    store = createStore(
+
+// 	        reducers,
+// 	    	applyMiddleware()  //applyMiddleware(thunk)
+
+// 	    ) 
+
+//         return store
+//     }, 
 
 //     currentStore: () => {
-//     	return store
+//         return store
 //     }
-
 // }
+
 var reducers = combineReducers({
-    profile: profileReducer,
-    account: accountReducer,
-    bug: bugReducer,
-    track: trackReducer
+	profile: profileReducer,
+	account: accountReducer,
+	bug: bugReducer,
+	track: trackReducer
 })
 
 var store = createStore(
-    reducers,
-    applyMiddleware(thunk)
+	reducers,
+	applyMiddleware(thunk)
 )
 
 export default store

@@ -489,8 +489,10 @@ exports.trackReducer = _trackReducer2.default;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+	value: true
 });
+
+var _reducers = __webpack_require__(21);
 
 var _redux = __webpack_require__(15);
 
@@ -498,45 +500,47 @@ var _reduxThunk = __webpack_require__(22);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reducers = __webpack_require__(21);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//{ thunk }
 
 // var store;
 
 // export default {
-// // configureStore
-// // combineReducer
 
-//     configureStore: () => {
+//     configureStore: () => {  //configureStore = () => {
 
-//     	const reducers = combineReducers({
-//     		profile: profileReducer,
-//             account: accountReducer,
-//             bug: bugReducer,
-//             track: trackReducer
-//     	}),
+// 	    const reducers = combineReducers({
 
-//     	store = createStore(
-//     		reducers,
-//     		applyMiddleware()
-//     	)
+// 	    	profile: profileReducer,
+// 	    	account: accountReducer,
+// 	    	bug: bugReducer,
+// 	    	track: trackReducer
 
+// 	    }),
 
-//     	return store
-//     },
+// 	    store = createStore(
+
+// 	        reducers,
+// 	    	applyMiddleware()  //applyMiddleware(thunk)
+
+// 	    ) 
+
+//         return store
+//     }, 
 
 //     currentStore: () => {
-//     	return store
+//         return store
 //     }
-
 // }
+
 var reducers = (0, _redux.combineReducers)({
-    profile: _reducers.profileReducer,
-    account: _reducers.accountReducer,
-    bug: _reducers.bugReducer,
-    track: _reducers.trackReducer
-});
+	profile: _reducers.profileReducer,
+	account: _reducers.accountReducer,
+	bug: _reducers.bugReducer,
+	track: _reducers.trackReducer
+}); //'react-redux'
+
 
 var store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 

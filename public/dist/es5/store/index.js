@@ -2,55 +2,57 @@
 
 var _interopRequire = function (obj) { return obj && obj.__esModule ? obj["default"] : obj; };
 
-var _redux = require("redux");
-
-var createStore = _redux.createStore;
-var combineReducers = _redux.combineReducers;
-var applyMiddleware = _redux.applyMiddleware;
-var thunk = _interopRequire(require("redux-thunk"));
-
 var _reducers = require("../reducers");
 
 var profileReducer = _reducers.profileReducer;
 var accountReducer = _reducers.accountReducer;
 var bugReducer = _reducers.bugReducer;
 var trackReducer = _reducers.trackReducer;
+var _redux = require("redux");
 
+var applyMiddleware = _redux.applyMiddleware;
+var createStore = _redux.createStore;
+var combineReducers = _redux.combineReducers;
+//'react-redux'
+var thunk = _interopRequire(require("redux-thunk"));
+
+//{ thunk }
 
 // var store;
 
 // export default {
-// // configureStore
-// // combineReducer
 
-//     configureStore: () => {
+//     configureStore: () => {  //configureStore = () => {
 
-//     	const reducers = combineReducers({
-//     		profile: profileReducer,
-//             account: accountReducer,
-//             bug: bugReducer,
-//             track: trackReducer
-//     	}),
+// 	    const reducers = combineReducers({
 
-//     	store = createStore(
-//     		reducers,
-//     		applyMiddleware()
-//     	)
+// 	    	profile: profileReducer,
+// 	    	account: accountReducer,
+// 	    	bug: bugReducer,
+// 	    	track: trackReducer
 
+// 	    }),
 
-//     	return store
+// 	    store = createStore(
+
+// 	        reducers,
+// 	    	applyMiddleware()  //applyMiddleware(thunk)
+
+// 	    )
+
+//         return store
 //     },
 
 //     currentStore: () => {
-//     	return store
+//         return store
 //     }
-
 // }
+
 var reducers = combineReducers({
-    profile: profileReducer,
-    account: accountReducer,
-    bug: bugReducer,
-    track: trackReducer
+	profile: profileReducer,
+	account: accountReducer,
+	bug: bugReducer,
+	track: trackReducer
 });
 
 var store = createStore(reducers, applyMiddleware(thunk));
