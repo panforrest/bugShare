@@ -23,6 +23,7 @@ module.exports = function (_x, action) {
             var updatedList = Object.assign([], updated.list);
             updatedList.push(action.bug);
             updated.list = updatedList;
+            console.log("BUG_CREATED: " + JSON.stringify(updated.list));
             return updated;
 
         default:

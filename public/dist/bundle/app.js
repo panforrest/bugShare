@@ -887,6 +887,7 @@ exports.default = function () {
             var updatedList = Object.assign([], updated.list);
             updatedList.push(action.bug);
             updated['list'] = updatedList;
+            console.log('BUG_CREATED: ' + JSON.stringify(updated['list']));
             return updated;
 
         default:
@@ -1125,21 +1126,27 @@ var Track = function (_Component) {
     function Track() {
         _classCallCheck(this, Track);
 
-        var _this = _possibleConstructorReturn(this, (Track.__proto__ || Object.getPrototypeOf(Track)).call(this));
+        var _this2 = _possibleConstructorReturn(this, (Track.__proto__ || Object.getPrototypeOf(Track)).call(this));
 
-        _this.state = {
+        _this2.state = {
             track: {
                 name: ''
+            },
+            bug: {
+                title: '',
+                detail: '',
+                response: ''
             }
         };
-        return _this;
+        return _this2;
     }
 
     _createClass(Track, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
+            var _this3 = this;
 
+            var _this = this;
             // console.log('Track.js layout componentDidMount: ')
             // APIManager.get('/api/track/'+this.props.slug, null, (err, response) => {
             _utils.APIManager.get('/api/track?slug=' + this.props.slug, null, function (err, response) {
@@ -1153,7 +1160,61 @@ var Track = function (_Component) {
                 // this.setState({
                 //  track: track
                 // })
-                _this2.props.tracksReceived(tracks);
+                _this3.props.tracksReceived(tracks);
+                _this.fetchPosts();
+            });
+        }
+    }, {
+        key: 'fetchPosts',
+        value: function fetchPosts() {
+            console.log('fetchPosts: ');
+            console.log(JSON.stringify(this.props.track._id));
+            if (this.props.track._id == null) {
+                return;
+            }
+
+            var id = this.props.track._id;
+            _utils.APIManager.get('/api/bug?track=' + id, null, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+
+                console.log(JSON.stringify(response.results));
+            });
+        }
+    }, {
+        key: 'updateBug',
+        value: function updateBug(event) {
+            event.preventDefault();
+            console.log(event.target.id + ' == ' + event.target.value);
+            var updatedBug = Object.assign({}, this.state.bug);
+            updatedBug[event.target.id] = event.target.value;
+            var bug = updatedBug;
+            this.setState({
+                bug: bug
+            });
+            console.log('updatedBug: ' + JSON.stringify(this.state.bug));
+        }
+    }, {
+        key: 'submitBug',
+        value: function submitBug(event) {
+            var _this4 = this;
+
+            event.preventDefault();
+            var bug = Object.assign({}, this.state.bug); // var bug = this.state.bug
+            console.log(JSON.stringify(this.props.track._id));
+            bug['track'] = this.props.track._id;
+
+            _utils.APIManager.post('/api/bug', bug, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+                _this4.props.bugCreated(response.result);
+                console.log('submitBug: ' + JSON.stringify(response.result));
             });
         }
     }, {
@@ -1179,14 +1240,16 @@ var Track = function (_Component) {
                                     null,
                                     this.props.track.name
                                 ),
-                                _react2.default.createElement('input', { placeholder: 'Post Title', className: 'form-control', type: 'text' }),
+                                _react2.default.createElement('input', { onChange: this.updateBug.bind(this), placeholder: 'Bug Title', id: 'title', className: 'form-control', type: 'text' }),
                                 _react2.default.createElement('br', null),
-                                _react2.default.createElement('textarea', { placeholder: 'Post Text', className: 'form-control' }),
+                                _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'Bug Detail', id: 'detail', className: 'form-control' }),
+                                _react2.default.createElement('br', null),
+                                _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'Response', id: 'response', className: 'form-control' }),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement(
                                     'button',
-                                    { className: 'btn btn-success' },
-                                    'Add Bug'
+                                    { onClick: this.submitBug.bind(this), className: 'btn btn-success' },
+                                    'Record Bug'
                                 ),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement('hr', { style: { borderTop: '1px solid red #444' } }),
@@ -1260,6 +1323,9 @@ var dispatchToProps = function dispatchToProps(dispatch) {
     return {
         tracksReceived: function tracksReceived(tracks) {
             return dispatch(_actions2.default.tracksReceived(tracks));
+        },
+        bugCreated: function bugCreated(bug) {
+            return dispatch(_actions2.default.bugCreated(bug));
         }
     };
 };
