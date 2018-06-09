@@ -103,7 +103,7 @@ var Register = (function (Component) {
                     ) : React.createElement(
                         "div",
                         null,
-                        "This is Register container.",
+                        "This is Register component.",
                         React.createElement(Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) })
                     )
                 );

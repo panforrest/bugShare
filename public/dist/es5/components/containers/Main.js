@@ -19,6 +19,8 @@ var Tracks = _interopRequire(require("./Tracks"));
 
 var Nav = _interopRequire(require("./Nav"));
 
+var Footer = _interopRequire(require("./Footer"));
+
 var _layout = require("../layout/");
 
 var Track = _layout.Track;

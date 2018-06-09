@@ -57,7 +57,7 @@ class Register extends Component {
                 {(this.props.currentUser != null) ? <h2> Welcome, { this.props.currentUser.email } { this.props.currentUser.firstName } { this.props.currentUser.lastName } </h2> :  
 
         			<div>
-                        This is Register container. 
+                        This is Register component. 
         			    <Signup onRegister={this.register.bind(this)} onLogin={this.login.bind(this)}/>
                     </div>
                 }
