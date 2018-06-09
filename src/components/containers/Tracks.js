@@ -5,15 +5,15 @@ import actions from '../../actions'
 import { connect } from 'react-redux'
 
 class Tracks extends Component {
-	constructor(){
-		super()
+	constructor(context, props){
+		super(context, props)
 		this.state = {
 			tracks: []
 		}
 	}
 
 	componentDidMount(){
-		console.log('Tracks container componentDidMount: ')
+		// console.log('Tracks container componentDidMount: ')
 		APIManager.get('/api/track', null, (err, response) => {
 			if (err) {
 				const msg = err.message || err
@@ -31,9 +31,9 @@ class Tracks extends Component {
 	}
 
 	render(){
-        const list = this.props.tracks.map((track, i) => {
+        var list = this.props.tracks.map((track, i) => {
         	return (
-                <li key={i}>{track.name}</li>
+                <li key={track._id}><a href={'/track/'+track.slug}>{track.name}</a></li>
         	)
         })
 

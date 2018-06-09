@@ -502,30 +502,45 @@ var _reducers = __webpack_require__(21);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store;
+// var store;
 
-exports.default = {
-    // configureStore
-    // combineReducer
+// export default {
+// // configureStore
+// // combineReducer
 
-    configureStore: function configureStore() {
+//     configureStore: () => {
 
-        var reducers = (0, _redux.combineReducers)({
-            profile: _reducers.profileReducer,
-            account: _reducers.accountReducer,
-            bug: _reducers.bugReducer,
-            track: _reducers.trackReducer
-        }),
-            store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)());
+//     	const reducers = combineReducers({
+//     		profile: profileReducer,
+//             account: accountReducer,
+//             bug: bugReducer,
+//             track: trackReducer
+//     	}),
 
-        return store;
-    },
+//     	store = createStore(
+//     		reducers,
+//     		applyMiddleware()
+//     	)
 
-    currentStore: function currentStore() {
-        return store;
-    }
 
-};
+//     	return store
+//     },
+
+//     currentStore: () => {
+//     	return store
+//     }
+
+// }
+var reducers = (0, _redux.combineReducers)({
+    profile: _reducers.profileReducer,
+    account: _reducers.accountReducer,
+    bug: _reducers.bugReducer,
+    track: _reducers.trackReducer
+});
+
+var store = (0, _redux.createStore)(reducers, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+exports.default = store;
 
 /***/ }),
 /* 24 */
@@ -564,10 +579,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Tracks = function (_Component) {
 	_inherits(Tracks, _Component);
 
-	function Tracks() {
+	function Tracks(context, props) {
 		_classCallCheck(this, Tracks);
 
-		var _this = _possibleConstructorReturn(this, (Tracks.__proto__ || Object.getPrototypeOf(Tracks)).call(this));
+		var _this = _possibleConstructorReturn(this, (Tracks.__proto__ || Object.getPrototypeOf(Tracks)).call(this, context, props));
 
 		_this.state = {
 			tracks: []
@@ -580,7 +595,7 @@ var Tracks = function (_Component) {
 		value: function componentDidMount() {
 			var _this2 = this;
 
-			console.log('Tracks container componentDidMount: ');
+			// console.log('Tracks container componentDidMount: ')
 			_utils.APIManager.get('/api/track', null, function (err, response) {
 				if (err) {
 					var msg = err.message || err;
@@ -602,8 +617,12 @@ var Tracks = function (_Component) {
 			var list = this.props.tracks.map(function (track, i) {
 				return _react2.default.createElement(
 					'li',
-					{ key: i },
-					track.name
+					{ key: track._id },
+					_react2.default.createElement(
+						'a',
+						{ href: '/track/' + track.slug },
+						track.name
+					)
 				);
 			});
 
@@ -1370,7 +1389,7 @@ exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Profil
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Tracks = exports.Bugs = exports.Admin = exports.Profiles = undefined;
+exports.Main = exports.Tracks = exports.Bugs = exports.Admin = exports.Profiles = undefined;
 
 var _Profiles = __webpack_require__(39);
 
@@ -1388,13 +1407,18 @@ var _Tracks = __webpack_require__(24);
 
 var _Tracks2 = _interopRequireDefault(_Tracks);
 
+var _Main = __webpack_require__(42);
+
+var _Main2 = _interopRequireDefault(_Main);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import Signup from './Signup'
 exports.Profiles = _Profiles2.default;
 exports.Admin = _Admin2.default;
 exports.Bugs = _Bugs2.default;
 exports.Tracks = _Tracks2.default;
-// import Signup from './Signup'
+exports.Main = _Main2.default;
 
 /***/ }),
 /* 41 */
@@ -1413,8 +1437,6 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _containers = __webpack_require__(40);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1423,37 +1445,30 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Main = function (_Component) {
-	_inherits(Main, _Component);
+var Track = function (_Component) {
+	_inherits(Track, _Component);
 
-	function Main() {
-		_classCallCheck(this, Main);
+	function Track() {
+		_classCallCheck(this, Track);
 
-		return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+		return _possibleConstructorReturn(this, (Track.__proto__ || Object.getPrototypeOf(Track)).apply(this, arguments));
 	}
 
-	_createClass(Main, [{
-		key: 'componentDidMount',
-		value: function componentDidMount() {
-			console.log('Main componentDidMount: ' + this.props.page);
-		}
-	}, {
+	_createClass(Track, [{
 		key: 'render',
 		value: function render() {
 			return _react2.default.createElement(
 				'div',
 				null,
-				'This is Main layout.',
-				_react2.default.createElement(_containers.Admin, null),
-				_react2.default.createElement(_containers.Tracks, null)
+				'This is Track component.'
 			);
 		}
 	}]);
 
-	return Main;
+	return Track;
 }(_react.Component);
 
-exports.default = Main;
+exports.default = Track;
 
 /***/ }),
 /* 42 */
@@ -1463,17 +1478,81 @@ exports.default = Main;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
-exports.Main = undefined;
 
-var _Main = __webpack_require__(41);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _Main2 = _interopRequireDefault(_Main);
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Tracks = __webpack_require__(24);
+
+var _Tracks2 = _interopRequireDefault(_Tracks);
+
+var _Admin = __webpack_require__(28);
+
+var _Admin2 = _interopRequireDefault(_Admin);
+
+var _Track = __webpack_require__(41);
+
+var _Track2 = _interopRequireDefault(_Track);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.Main = _Main2.default; // import Home from './Home'
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // content = <div><Tracks /><Admin /></div>
+// content = <Track slug={this.props.slug} />
+
+
+// import { Track } from '../layout'
+
+var Main = function (_Component) {
+    _inherits(Main, _Component);
+
+    function Main() {
+        _classCallCheck(this, Main);
+
+        return _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).apply(this, arguments));
+    }
+
+    _createClass(Main, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            console.log('Main componentDidMount props.page: ' + this.props.page);
+            // console.log('page: '+JSON.stringify(this.state.page))
+            // alert('slug: '+JSON.stringify(this.state.slug))
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var content = null;
+            var page = this.props.page;
+            if (page == 'home') content = _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(_Tracks2.default, null),
+                _react2.default.createElement(_Admin2.default, null)
+            );
+
+            if (page == 'track') content = _react2.default.createElement(_Track2.default, { slug: this.props.slug });
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                content
+            );
+        }
+    }]);
+
+    return Main;
+}(_react.Component);
+
+exports.default = Main;
 
 /***/ }),
 /* 43 */,
@@ -1501,7 +1580,7 @@ var _reactDom = __webpack_require__(50);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _layout = __webpack_require__(42);
+var _containers = __webpack_require__(40);
 
 var _reactRedux = __webpack_require__(2);
 
@@ -1515,70 +1594,91 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //     render() {
+//         return (
+//             <Provider store = {store.configureStore()}>
+//                 <div>
+
+//                     <Main page={this.state.page} slug={this.state.slug}/>
+//                 </div>
+//             </Provider>    
+//         )
+//     }
+// } 
+
+// ReactDom.render(<App />, document.getElementById('root'))
+
 // import { Home } from './components/layout'
 
 
 // class App extends Component {
-// 	render() {
-// 		return (
-// 			<Provider store = {store.configureStore()}>
-// 	            <div>
-// 	                <Home />
-// 	            </div>
-// 	        </Provider>    
-// 		)
-// 	}
+//  render() {
+//      return (
+//          <Provider store = {store.configureStore()}>
+//              <div>
+
+//                  <Home />
+//              </div>
+//          </Provider>    
+//      )
+//  }
 // } 
 
+// ReactDom.render(<App />, document.getElementById('root'))
+
 var App = function (_Component) {
-  _inherits(App, _Component);
+    _inherits(App, _Component);
 
-  function App(props, context) {
-    _classCallCheck(this, App);
+    function App(props, context) {
+        _classCallCheck(this, App);
 
-    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props, context));
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props, context));
 
-    _this.state = {
-      page: 'home'
-    };
-    return _this;
-  }
-
-  _createClass(App, [{
-    key: 'comopnentWillMount',
-    value: function comopnentWillMount() {
-      var path = widow.location.pathname.replace('/', '');
-
-      var page = 'home';
-      if (path.length) {
-        var parts = path.split('/');
-        page = parts[0];
-      }
-
-      this.setState({
-        page: page
-      });
+        _this.state = {
+            page: 'home',
+            slug: null
+        };
+        return _this;
     }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        _reactRedux.Provider,
-        { store: _store2.default.configureStore() },
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_layout.Main, { page: this.state.page })
-        )
-      );
-    }
-  }]);
 
-  return App;
+    _createClass(App, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            //comopnentWillMount(){
+            var pathname = window.location.pathname;
+            console.log(pathname);
+            var path = pathname.replace('/', '');
+
+            var page = 'home';
+            var slug = null;
+            if (path.length > 0) {
+                var parts = path.split('/');
+                page = parts[0];
+                if (parts.length > 1) slug = parts[1];
+            }
+
+            this.setState({
+                page: page,
+                slug: slug
+            });
+            // console.log('state: '+JSON.stringify(this.state))
+            // alert('state: '+JSON.stringify(this.state))
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(_containers.Main, { page: this.state.page, slug: this.state.slug });
+        }
+    }]);
+
+    return App;
 }(_react.Component);
 
-_reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
+_reactDom2.default.render(_react2.default.createElement(
+    _reactRedux.Provider,
+    { store: _store2.default },
+    _react2.default.createElement(App, null)
+), document.getElementById('app'));
 
 /***/ })
 /******/ ]);

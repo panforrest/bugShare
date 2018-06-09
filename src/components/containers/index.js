@@ -3,6 +3,7 @@ import Profiles from './Profiles'
 import Admin from './Admin'
 import Bugs from './Bugs'
 import Tracks from './Tracks'
+import Main from './Main'
 
 export {  //export default {
 
@@ -10,6 +11,7 @@ export {  //export default {
     // Signup,
     Admin,
     Bugs,
-    Tracks
+    Tracks, 
+    Main
 
 }
