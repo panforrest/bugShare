@@ -20,151 +20,154 @@ var actions = _interopRequire(require("../../actions"));
 
 var connect = require("react-redux").connect;
 var Signup = (function (Component) {
-  function Signup() {
-    _classCallCheck(this, Signup);
+    function Signup() {
+        _classCallCheck(this, Signup);
 
-    _get(Object.getPrototypeOf(Signup.prototype), "constructor", this).call(this);
-    this.state = {
-      visitor: {
-        email: "",
-        firstName: "",
-        lastName: "",
-        password: ""
-      }
-    };
-  }
-
-  _inherits(Signup, Component);
-
-  _prototypeProperties(Signup, null, {
-    update: {
-      value: function update(event) {
-        // console.log('updateProfile: ')
-        event.preventDefault();
-        // console.log(event.target.id+' == '+JSON.stringify(event.target.value))    //FORGOT target
-        var updated = Object.assign({}, this.state.visitor); //var updated = Object.assign({}, this.state)//[]
-        updated[event.target.id] = event.target.value;
-        this.setState({
-          visitor: updated
-        });
-        console.log(JSON.stringify(this.state.visitor));
-      },
-      writable: true,
-      configurable: true
-    },
-    register: {
-      value: function register(event) {
-        // event.preventDefault()
-        //       // console.log('register: ')
-        //       // APIManager.post('/api/profile', this.state.visitor, (err, response) => {
-        //       APIManager.post('/account/register', this.state.visitor, (err, response) => {
-        //           if (err) {
-        //           	const msg = err.message || err
-        //               alert(msg)
-        //           	return
-        //           }
-
-        //           console.log('register: '+JSON.stringify(response))
-        //           var result = response.profile  //var result = response.result
-        //           this.props.profileCreated(result)
-        //       })
-        this.props.onRegister(this.state.visitor);
-      },
-      writable: true,
-      configurable: true
-    },
-    login: {
-      value: function login(event) {
-        // event.preventDefault()
-        // APIManager.post('/account/login', this.state.visitor, (err, response) => {
-        //     if (err) {
-        //         const msg = err.message || err
-        //         // console.log(msg)
-        //         alert(msg)
-        //         return
-        //     }
-
-        //     console.log(JSON.stringify(response))
-        //     var result = response.profile
-        //     this.props.currentUserReceived(result)
-        // })
-        this.props.onLogin(this.state.visitor);
-      },
-      writable: true,
-      configurable: true
-    },
-    render: {
-      value: function render() {
-        return React.createElement(
-          "div",
-          null,
-          this.props.currentUser != null ? React.createElement(
-            "p",
-            null,
-            "Welcome, ",
-            this.props.currentUser.email
-          ) : React.createElement(
-            "div",
-            null,
-            React.createElement(
-              "h2",
-              null,
-              "Sign up"
-            ),
-            React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "email", placeholder: "Email" }),
-            React.createElement("br", null),
-            React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "firstName", placeholder: "First Name" }),
-            React.createElement("br", null),
-            React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "lastName", placeholder: "Last Name" }),
-            React.createElement("br", null),
-            React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "password", placeholder: "Password" }),
-            React.createElement("br", null),
-            React.createElement(
-              "button",
-              { onClick: this.register.bind(this) },
-              "Submit"
-            ),
-            React.createElement(
-              "h2",
-              null,
-              "Log in"
-            ),
-            React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "email", placeholder: "Email" }),
-            React.createElement("br", null),
-            React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "password", placeholder: "Password" }),
-            React.createElement("br", null),
-            React.createElement(
-              "button",
-              { onClick: this.login.bind(this) },
-              "Submit"
-            )
-          )
-        );
-      },
-      writable: true,
-      configurable: true
+        _get(Object.getPrototypeOf(Signup.prototype), "constructor", this).call(this);
+        this.state = {
+            visitor: {
+                email: "",
+                firstName: "",
+                lastName: "",
+                password: ""
+            }
+        };
     }
-  });
 
-  return Signup;
+    _inherits(Signup, Component);
+
+    _prototypeProperties(Signup, null, {
+        update: {
+            value: function update(event) {
+                // console.log('updateProfile: ')
+                event.preventDefault();
+                // console.log(event.target.id+' == '+JSON.stringify(event.target.value))    //FORGOT target
+                var updated = Object.assign({}, this.state.visitor); //var updated = Object.assign({}, this.state)//[]
+                updated[event.target.id] = event.target.value;
+                this.setState({
+                    visitor: updated
+                });
+                console.log(JSON.stringify(this.state.visitor));
+            },
+            writable: true,
+            configurable: true
+        },
+        register: {
+            value: function register(event) {
+                // event.preventDefault()
+                //       // console.log('register: ')
+                //       // APIManager.post('/api/profile', this.state.visitor, (err, response) => {
+                //       APIManager.post('/account/register', this.state.visitor, (err, response) => {
+                //           if (err) {
+                //           	const msg = err.message || err
+                //               alert(msg)
+                //           	return
+                //           }
+
+                //           console.log('register: '+JSON.stringify(response))
+                //           var result = response.profile  //var result = response.result
+                //           this.props.profileCreated(result)
+                //       })
+                this.props.onRegister(this.state.visitor);
+            },
+            writable: true,
+            configurable: true
+        },
+        login: {
+            value: function login(event) {
+                // event.preventDefault()
+                // APIManager.post('/account/login', this.state.visitor, (err, response) => {
+                //     if (err) {
+                //         const msg = err.message || err
+                //         // console.log(msg)
+                //         alert(msg)
+                //         return
+                //     }
+
+                //     console.log(JSON.stringify(response))
+                //     var result = response.profile
+                //     this.props.currentUserReceived(result)
+                // })
+                this.props.onLogin(this.state.visitor);
+            },
+            writable: true,
+            configurable: true
+        },
+        render: {
+            value: function render() {
+                return React.createElement(
+                    "div",
+                    null,
+                    this.props.currentUser != null ? React.createElement(
+                        "p",
+                        null,
+                        "Welcome, ",
+                        this.props.currentUser.firstName
+                    ) : React.createElement(
+                        "div",
+                        null,
+                        React.createElement(
+                            "h2",
+                            null,
+                            "Sign up"
+                        ),
+                        React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "email", placeholder: "Email", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 20 + "%" } }),
+                        React.createElement("br", null),
+                        React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "firstName", placeholder: "First Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 20 + "%" } }),
+                        React.createElement("br", null),
+                        React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "lastName", placeholder: "Last Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 20 + "%" } }),
+                        React.createElement("br", null),
+                        React.createElement("input", { onChange: this.update.bind(this), type: "password", id: "password", placeholder: "Password", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 20 + "%" } }),
+                        React.createElement("br", null),
+                        React.createElement(
+                            "button",
+                            { onClick: this.register.bind(this), className: "btn btn-success" },
+                            "Submit"
+                        ),
+                        React.createElement("br", null),
+                        React.createElement("br", null),
+                        React.createElement(
+                            "h2",
+                            null,
+                            "Log in"
+                        ),
+                        React.createElement("input", { onChange: this.update.bind(this), type: "text", id: "email", placeholder: "Email", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 20 + "%" } }),
+                        React.createElement("br", null),
+                        React.createElement("input", { onChange: this.update.bind(this), type: "password", id: "password", placeholder: "Password", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 20 + "%" } }),
+                        React.createElement("br", null),
+                        React.createElement(
+                            "button",
+                            { onClick: this.login.bind(this), className: "btn btn-success" },
+                            "Submit"
+                        ),
+                        React.createElement("br", null)
+                    )
+                );
+            },
+            writable: true,
+            configurable: true
+        }
+    });
+
+    return Signup;
 })(Component);
 
 var stateToProps = function (state) {
-  return {
-    profile: state.profile.user,
-    currentUser: state.account.currentUser
-  };
+    return {
+        profile: state.profile.user,
+        currentUser: state.account.currentUser
+    };
 };
 
 var dispatchToProps = function (dispatch) {
-  return {
-    profileCreated: function (profile) {
-      return dispatch(actions.profileCreated(profile));
-    },
-    currentUserReceived: function (profile) {
-      return dispatch(actions.currentUserReceived(profile));
-    }
-  };
+    return {
+        profileCreated: function (profile) {
+            return dispatch(actions.profileCreated(profile));
+        },
+        currentUserReceived: function (profile) {
+            return dispatch(actions.currentUserReceived(profile));
+        }
+    };
 };
 
 module.exports = connect(stateToProps, dispatchToProps)(Signup);

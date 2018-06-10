@@ -100,6 +100,7 @@ class Track extends Component {
 
         var bug = Object.assign({}, this.state.bug)   // var bug = this.state.bug
         console.log(JSON.stringify(this.props.track._id))
+        console.log(JSON.stringify(this.props.currentUser.id))
         bug['track'] = this.props.track._id
         bug['profile'] = this.props.currentUser.id
 

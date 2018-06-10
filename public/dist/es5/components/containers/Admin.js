@@ -236,16 +236,21 @@ var Admin = (function (Component) {
                             "h2",
                             null,
                             "Welcome, ",
-                            this.props.currentUser.email
+                            this.props.currentUser.firstName
                         ),
                         React.createElement(
                             "h3",
                             null,
-                            "Create Track"
+                            "Create a new Track"
                         ),
-                        React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "name", placeholder: "Track Name" }),
+                        React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "name", placeholder: "Track Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 20 + "%" } }),
                         React.createElement("br", null),
-                        React.createElement("input", { onClick: this.submitTrack.bind(this), type: "submit", value: "Submit" })
+                        React.createElement(
+                            "button",
+                            { onClick: this.submitTrack.bind(this), className: "btn btn-success" },
+                            "Submit New Track"
+                        ),
+                        React.createElement("br", null)
                     )
                 );
             },
