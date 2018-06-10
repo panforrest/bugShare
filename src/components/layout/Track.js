@@ -1,3 +1,4 @@
+// <textarea onChange={this.updateBug.bind(this)} placeholder="Response" id="response" className="form-control"></textarea><br /> 
 import React, { Component } from 'react'
 import { APIManager } from '../../utils' 
 import { Nav } from '../containers'
@@ -110,7 +111,7 @@ class Track extends Component {
             }
             this.props.bugCreated(response.result)
             console.log('submitBug: '+JSON.stringify(response.result))
-
+            window.location.href = '/bug/'+bug['slug']
         })
         
 
@@ -137,7 +138,6 @@ class Track extends Component {
                                 <h4>{this.props.track.name}</h4>
                                 <input onChange={this.updateBug.bind(this)} placeholder="Bug Title" id="title" className="form-control" type="text" /><br />
                                 <textarea onChange={this.updateBug.bind(this)} placeholder="Bug Detail" id="detail" className="form-control"></textarea><br /> 
-                                <textarea onChange={this.updateBug.bind(this)} placeholder="Response" id="response" className="form-control"></textarea><br /> 
                                 <button onClick={this.submitBug.bind(this)} className="btn btn-success">Record Bug</button><br />
                                 <hr style={{borderTop: '1px solid red #444'}} />
                                 {bugList}

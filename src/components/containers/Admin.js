@@ -1,5 +1,10 @@
                     // <h2>User is not logged in. </h2>
                     // export default connect(stateToProps, dispatchToProps)(Admin)
+                        // <h3>Create Bug</h3>
+                        // <input onChange={this.updateBug.bind(this)} type="text" id="title" placeholder="Title" /><br />
+                        // <textarea onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
+                        // <textarea onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
+                        // <input onClick={this.submitBug.bind(this)} type="submit" value="Submit" />
 import React, { Component } from 'react'
 import actions from '../../actions'
 import { connect } from 'react-redux'
@@ -87,7 +92,7 @@ class Admin extends Component {
                 slug += '-'
         }
 
-        // slug = slug.repalce('?', '-')
+        slug = slug.replace('?', '-')
         track['slug'] = slug
         console.log(JSON.stringify(track))
 
@@ -100,6 +105,7 @@ class Admin extends Component {
 
             console.log('track submitted: '+JSON.stringify(response.result))
             this.props.trackCreated(response.result)
+            window.location.href = '/track/'+track['slug']
         })
     }    
 
@@ -139,11 +145,7 @@ class Admin extends Component {
                     <div>
                         <h2>Welcome, {this.props.currentUser.email}</h2> 
 
-                        <h3>Create Bug</h3>
-                        <input onChange={this.updateBug.bind(this)} type="text" id="title" placeholder="Title" /><br />
-                        <textarea onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
-                        <textarea onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
-                        <input onClick={this.submitBug.bind(this)} type="submit" value="Submit" />
+
 
                         <h3>Create Track</h3>
                         <input onChange={this.updateTrack.bind(this)} type="text" id="name" placeholder="Track Name" /><br />

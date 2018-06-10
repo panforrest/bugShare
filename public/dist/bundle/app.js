@@ -589,6 +589,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <h2>User is not logged in. </h2>
 // export default connect(stateToProps, dispatchToProps)(Admin)
+// <h3>Create Bug</h3>
+// <input onChange={this.updateBug.bind(this)} type="text" id="title" placeholder="Title" /><br />
+// <textarea onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
+// <textarea onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
+// <input onClick={this.submitBug.bind(this)} type="submit" value="Submit" />
 
 
 var Admin = function (_Component) {
@@ -690,7 +695,7 @@ var Admin = function (_Component) {
                 if (i != parts.length - 1) slug += '-';
             }
 
-            // slug = slug.repalce('?', '-')
+            slug = slug.replace('?', '-');
             track['slug'] = slug;
             console.log(JSON.stringify(track));
 
@@ -703,6 +708,7 @@ var Admin = function (_Component) {
 
                 console.log('track submitted: ' + JSON.stringify(response.result));
                 _this5.props.trackCreated(response.result);
+                window.location.href = '/track/' + track['slug'];
             });
         }
     }, {
@@ -753,18 +759,6 @@ var Admin = function (_Component) {
                         'Welcome, ',
                         this.props.currentUser.email
                     ),
-                    _react2.default.createElement(
-                        'h3',
-                        null,
-                        'Create Bug'
-                    ),
-                    _react2.default.createElement('input', { onChange: this.updateBug.bind(this), type: 'text', id: 'title', placeholder: 'Title' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), type: 'text', id: 'detail', placeholder: 'Detail' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), type: 'text', id: 'response', placeholder: 'Response' }),
-                    _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onClick: this.submitBug.bind(this), type: 'submit', value: 'Submit' }),
                     _react2.default.createElement(
                         'h3',
                         null,
@@ -1181,7 +1175,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <textarea onChange={this.updateBug.bind(this)} placeholder="Response" id="response" className="form-control"></textarea><br /> 
+
 
 var Track = function (_Component) {
     _inherits(Track, _Component);
@@ -1304,6 +1299,7 @@ var Track = function (_Component) {
                 }
                 _this5.props.bugCreated(response.result);
                 console.log('submitBug: ' + JSON.stringify(response.result));
+                window.location.href = '/bug/' + bug['slug'];
             });
         }
     }, {
@@ -1352,8 +1348,6 @@ var Track = function (_Component) {
                                 _react2.default.createElement('input', { onChange: this.updateBug.bind(this), placeholder: 'Bug Title', id: 'title', className: 'form-control', type: 'text' }),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'Bug Detail', id: 'detail', className: 'form-control' }),
-                                _react2.default.createElement('br', null),
-                                _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'Response', id: 'response', className: 'form-control' }),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement(
                                     'button',
@@ -2325,21 +2319,36 @@ var Register = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                this.props.currentUser != null ? _react2.default.createElement(
-                    'h2',
-                    null,
-                    ' Welcome, ',
-                    this.props.currentUser.email,
-                    ' ',
-                    this.props.currentUser.firstName,
-                    ' ',
-                    this.props.currentUser.lastName,
-                    ' '
-                ) : _react2.default.createElement(
-                    'div',
-                    null,
-                    'This is Register component.',
-                    _react2.default.createElement(_presentation.Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) })
+                _react2.default.createElement(
+                    'section',
+                    { id: 'content' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'content-wrap' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'container clearfix' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'postcontent nobottommargin clearfix' },
+                                this.props.currentUser != null ? _react2.default.createElement(
+                                    'h2',
+                                    null,
+                                    ' Welcome, ',
+                                    this.props.currentUser.email,
+                                    ' ',
+                                    this.props.currentUser.firstName,
+                                    ' ',
+                                    this.props.currentUser.lastName,
+                                    ' '
+                                ) : _react2.default.createElement(
+                                    'div',
+                                    null,
+                                    _react2.default.createElement(_presentation.Signup, { onRegister: this.register.bind(this), onLogin: this.login.bind(this) })
+                                )
+                            )
+                        )
+                    )
                 )
             );
         }

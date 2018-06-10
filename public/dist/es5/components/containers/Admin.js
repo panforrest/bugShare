@@ -12,6 +12,11 @@ var _classCallCheck = function (instance, Constructor) { if (!(instance instance
 
 // <h2>User is not logged in. </h2>
 // export default connect(stateToProps, dispatchToProps)(Admin)
+// <h3>Create Bug</h3>
+// <input onChange={this.updateBug.bind(this)} type="text" id="title" placeholder="Title" /><br />
+// <textarea onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
+// <textarea onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
+// <input onClick={this.submitBug.bind(this)} type="submit" value="Submit" />
 var _react = require("react");
 
 var React = _interopRequire(_react);
@@ -123,7 +128,7 @@ var Admin = (function (Component) {
                     if (i != parts.length - 1) slug += "-";
                 }
 
-                // slug = slug.repalce('?', '-')
+                slug = slug.replace("?", "-");
                 track.slug = slug;
                 console.log(JSON.stringify(track));
 
@@ -136,6 +141,7 @@ var Admin = (function (Component) {
 
                     console.log("track submitted: " + JSON.stringify(response.result));
                     _this.props.trackCreated(response.result);
+                    window.location.href = "/track/" + track.slug;
                 });
             },
             writable: true,
@@ -191,18 +197,6 @@ var Admin = (function (Component) {
                             "Welcome, ",
                             this.props.currentUser.email
                         ),
-                        React.createElement(
-                            "h3",
-                            null,
-                            "Create Bug"
-                        ),
-                        React.createElement("input", { onChange: this.updateBug.bind(this), type: "text", id: "title", placeholder: "Title" }),
-                        React.createElement("br", null),
-                        React.createElement("textarea", { onChange: this.updateBug.bind(this), type: "text", id: "detail", placeholder: "Detail" }),
-                        React.createElement("br", null),
-                        React.createElement("textarea", { onChange: this.updateBug.bind(this), type: "text", id: "response", placeholder: "Response" }),
-                        React.createElement("br", null),
-                        React.createElement("input", { onClick: this.submitBug.bind(this), type: "submit", value: "Submit" }),
                         React.createElement(
                             "h3",
                             null,
