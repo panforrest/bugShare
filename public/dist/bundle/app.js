@@ -181,7 +181,9 @@ exports.default = { //export {
     BUGS_RECEIVED: 'BUGS_RECEIVED',
     BUG_CREATED: 'BUG_CREATED',
     TRACKS_RECEIVED: 'TRACKS_RECEIVED',
-    TRACK_CREATED: 'TRACK_CREATED'
+    TRACK_CREATED: 'TRACK_CREATED',
+    SOLUTIONS_RECEIVED: 'SOLUTIONS_RECEIVED',
+    SOLUTION_CREATED: 'SOLUTION_CREATED'
 
 };
 
@@ -250,6 +252,20 @@ exports.default = {
         return {
             type: _constants2.default.TRACK_CREATED,
             track: track
+        };
+    },
+
+    solutionsReceived: function solutionsReceived(solutions) {
+        return {
+            type: _constants2.default.SOLUTIONS_RECEIVED,
+            solutions: solutions
+        };
+    },
+
+    solutionCreated: function solutionCreated(solution) {
+        return {
+            type: _constants2.default.SOLUTION_CREATED,
+            solution: solution
         };
     }
 };
@@ -1036,7 +1052,7 @@ exports.default = function () {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.trackReducer = exports.bugReducer = exports.accountReducer = exports.profileReducer = undefined;
+exports.solutionReducer = exports.trackReducer = exports.bugReducer = exports.accountReducer = exports.profileReducer = undefined;
 
 var _profileReducer = __webpack_require__(25);
 
@@ -1054,12 +1070,17 @@ var _trackReducer = __webpack_require__(22);
 
 var _trackReducer2 = _interopRequireDefault(_trackReducer);
 
+var _solutionReducer = __webpack_require__(61);
+
+var _solutionReducer2 = _interopRequireDefault(_solutionReducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.profileReducer = _profileReducer2.default;
 exports.accountReducer = _accountReducer2.default;
 exports.bugReducer = _bugReducer2.default;
 exports.trackReducer = _trackReducer2.default;
+exports.solutionReducer = _solutionReducer2.default;
 
 /***/ }),
 /* 27 */
@@ -1118,7 +1139,8 @@ var reducers = (0, _redux.combineReducers)({
 	profile: _reducers.profileReducer,
 	account: _reducers.accountReducer,
 	bug: _reducers.bugReducer,
-	track: _reducers.trackReducer
+	track: _reducers.trackReducer,
+	solution: _reducers.solutionReducer
 }); //'react-redux'
 
 
@@ -1176,7 +1198,8 @@ var Track = function (_Component) {
             bug: {
                 title: '',
                 detail: '',
-                response: ''
+                response: '',
+                slug: ''
             }
         };
         return _this2;
@@ -1202,12 +1225,12 @@ var Track = function (_Component) {
                 //  track: track
                 // })
                 _this3.props.tracksReceived(tracks);
-                _this.fetchPosts();
+                _this.fetchBugs();
             });
         }
     }, {
-        key: 'fetchPosts',
-        value: function fetchPosts() {
+        key: 'fetchBugs',
+        value: function fetchBugs() {
             var _this4 = this;
 
             console.log('fetchPosts: ');
@@ -1252,6 +1275,22 @@ var Track = function (_Component) {
                 return;
             }
 
+            console.log('to submitBug: ' + JSON.stringify(this.state.bug));
+            var bug = this.state.bug;
+            var title = bug.title;
+            var parts = title.split(' ');
+
+            var slug = '';
+            for (var i = 0; i < parts.length; i++) {
+                var word = parts[i];
+                slug += word;
+                if (i != parts.length - 1) slug += '-';
+            }
+
+            slug = slug.replace('?', '-');
+            bug['slug'] = slug;
+            console.log(JSON.stringify(bug));
+
             var bug = Object.assign({}, this.state.bug); // var bug = this.state.bug
             console.log(JSON.stringify(this.props.track._id));
             bug['track'] = this.props.track._id;
@@ -1277,7 +1316,11 @@ var Track = function (_Component) {
                     _react2.default.createElement(
                         'h4',
                         { className: 'list-group-item-heading' },
-                        bug.title
+                        _react2.default.createElement(
+                            'a',
+                            { href: '/bug/' + bug.slug },
+                            bug.title
+                        )
                     ),
                     _react2.default.createElement(
                         'p',
@@ -1368,7 +1411,7 @@ exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Track)
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.Register = exports.Account = exports.Track = undefined;
+exports.Bug = exports.Register = exports.Account = exports.Track = undefined;
 
 var _Track = __webpack_require__(28);
 
@@ -1382,12 +1425,18 @@ var _Register = __webpack_require__(57);
 
 var _Register2 = _interopRequireDefault(_Register);
 
+var _Bug = __webpack_require__(60);
+
+var _Bug2 = _interopRequireDefault(_Bug);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import Home from './Home'
+// import Main from './Main'
 exports.Track = _Track2.default;
 exports.Account = _Account2.default;
-exports.Register = _Register2.default; // import Home from './Home'
-// import Main from './Main'
+exports.Register = _Register2.default;
+exports.Bug = _Bug2.default;
 
 /***/ }),
 /* 30 */
@@ -1465,6 +1514,8 @@ var Main = function (_Component) {
 
             if (page == 'account') content = _react2.default.createElement(_layout.Account, null);
 
+            if (page == 'bug') content = _react2.default.createElement(_layout.Bug, { slug: this.props.slug });
+
             return _react2.default.createElement(
                 'div',
                 null,
@@ -1502,7 +1553,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <li><a href="#"><i className="icon-time"></i> {this.props.track.address} </a></li>
+// <li><a href="#"><i className="icon-map-marker2"></i> {this.props.track.city} </a></li>
+
 
 var TrackPreview = function (_Component) {
     _inherits(TrackPreview, _Component);
@@ -1554,30 +1607,6 @@ var TrackPreview = function (_Component) {
                                 "span",
                                 { className: "label label-warning" },
                                 "Private"
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "li",
-                            null,
-                            _react2.default.createElement(
-                                "a",
-                                { href: "#" },
-                                _react2.default.createElement("i", { className: "icon-time" }),
-                                " ",
-                                this.props.track.address,
-                                " "
-                            )
-                        ),
-                        _react2.default.createElement(
-                            "li",
-                            null,
-                            _react2.default.createElement(
-                                "a",
-                                { href: "#" },
-                                _react2.default.createElement("i", { className: "icon-map-marker2" }),
-                                " ",
-                                this.props.track.city,
-                                " "
                             )
                         )
                     ),
@@ -2647,6 +2676,255 @@ var Footer = function (_Component) {
 }(_react.Component);
 
 exports.default = Footer;
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _utils = __webpack_require__(3);
+
+var _actions = __webpack_require__(5);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _reactRedux = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Bug = function (_Component) {
+    _inherits(Bug, _Component);
+
+    function Bug() {
+        _classCallCheck(this, Bug);
+
+        var _this2 = _possibleConstructorReturn(this, (Bug.__proto__ || Object.getPrototypeOf(Bug)).call(this));
+
+        _this2.state = {
+            solution: {
+                text: ''
+
+            }
+        };
+        return _this2;
+    }
+
+    _createClass(Bug, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this3 = this;
+
+            var _this = this;
+            _utils.APIManager.get('/api/bug?slug=' + this.props.slug, null, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+
+                console.log(JSON.stringify(response.results));
+                var bugs = response.results;
+                _this3.props.bugsReceived(bugs);
+                _this.fetchSolutions();
+            });
+
+            // _this.fetchSolutions()
+        }
+    }, {
+        key: 'fetchSolutions',
+        value: function fetchSolutions() {
+            var _this4 = this;
+
+            console.log('fetchSolutions: ');
+            console.log('this.props.bug.id: ' + JSON.stringify(this.props.bug.id));
+
+            if (this.props.bug.id == null) {
+                return;
+            }
+
+            _utils.APIManager.get('/api/solution?bug=' + this.props.bug.id, null, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+
+                console.log(JSON.stringify(response.results));
+                var solutions = response.results;
+                _this4.props.solutionsReceived(solutions);
+            });
+        }
+    }, {
+        key: 'updateSolution',
+        value: function updateSolution(event) {
+            event.preventDefault();
+            console.log('updateSolution: ' + event.target.id + ' == ' + event.target.value);
+            var updatedSolution = Object.assign({}, this.state.solution);
+            updatedSolution[event.target.id] = event.target.value;
+            this.setState({
+                solution: updatedSolution
+            });
+        }
+    }, {
+        key: 'submitSolution',
+        value: function submitSolution(event) {
+            var _this5 = this;
+
+            event.preventDefault();
+            var solution = Object.assign({}, this.state.solution);
+            solution['bug'] = this.props.bug.id;
+            solution['profile'] = this.props.currentUser.id;
+            console.log(JSON.stringify(solution));
+            _utils.APIManager.post('/api/solution', solution, function (err, response) {
+                if (err) {
+                    var msg = err.message || err;
+                    alert(msg);
+                    return;
+                }
+
+                console.log(JSON.stringify(response.result));
+                var solution = response.result;
+                _this5.props.solutionCreated(solution);
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+
+            var solutionList = this.props.solutions.map(function (solution, i) {
+                return (
+                    //<li key={i}>{solution.text}</li>
+                    _react2.default.createElement(
+                        'a',
+                        { key: i, className: 'list-group-item' },
+                        _react2.default.createElement(
+                            'h4',
+                            { className: 'list-group-item-heading' },
+                            solution.text
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            { className: 'list-group-item-text' },
+                            solution.text
+                        )
+                    )
+                );
+            });
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    'Your Response'
+                ),
+                _react2.default.createElement('input', { onChange: this.updateSolution.bind(this), type: 'text', id: 'text', placeholder: 'Solution Text' }),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement(
+                    'button',
+                    { onClick: this.submitSolution.bind(this) },
+                    'Submit Solution'
+                ),
+                _react2.default.createElement('br', null),
+                _react2.default.createElement('br', null),
+                solutionList
+            );
+        }
+    }]);
+
+    return Bug;
+}(_react.Component);
+
+var stateToProps = function stateToProps(state) {
+    var bugsArray = state.bug.list;
+
+    return {
+        bug: bugsArray.length == 0 ? { text: '' } : bugsArray[0],
+        currentUser: state.account.currentUser,
+        solutions: state.solution.list
+    };
+};
+
+var dispatchToProps = function dispatchToProps(dispatch) {
+    return {
+        bugsReceived: function bugsReceived(bugs) {
+            return dispatch(_actions2.default.bugsReceived(bugs));
+        },
+        solutionsReceived: function solutionsReceived(solutions) {
+            return dispatch(_actions2.default.solutionsReceived(solutions));
+        },
+        solutionCreated: function solutionCreated(solution) {
+            return dispatch(_actions2.default.solutionCreated(solution));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Bug);
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+				value: true
+});
+
+var _constants = __webpack_require__(4);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var initialState = {
+
+				list: []
+
+};
+
+exports.default = function () {
+				var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+				var action = arguments[1];
+
+				var updatedState = Object.assign({}, state);
+				switch (action.type) {
+								case _constants2.default.SOLUTIONS_RECEIVED:
+												console.log('SOLUTIONS_RECEIVED: ' + JSON.stringify(action.solutions));
+												updatedState['list'] = action.solutions;
+												return updatedState;
+
+								case _constants2.default.SOLUTION_CREATED:
+												var updatedList = Object.assign([], updatedState.list); //var updatedList = Object.assign({}, updatedState.list)
+												console.log('SOLUTION_CREATED: ' + JSON.stringify(action.solution));
+												updatedList.push(action.solution);
+												updatedState['list'] = updatedList;
+												return updatedState;
+
+								default:
+												return state;
+				}
+};
 
 /***/ })
 /******/ ]);

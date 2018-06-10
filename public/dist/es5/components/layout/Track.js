@@ -32,7 +32,8 @@ var Track = (function (Component) {
             bug: {
                 title: "",
                 detail: "",
-                response: ""
+                response: "",
+                slug: ""
             }
         };
     }
@@ -58,14 +59,14 @@ var Track = (function (Component) {
                     //  track: track
                     // })
                     _this2.props.tracksReceived(tracks);
-                    _this.fetchPosts();
+                    _this.fetchBugs();
                 });
             },
             writable: true,
             configurable: true
         },
-        fetchPosts: {
-            value: function fetchPosts() {
+        fetchBugs: {
+            value: function fetchBugs() {
                 var _this = this;
                 console.log("fetchPosts: ");
                 console.log(JSON.stringify(this.props.track._id));
@@ -112,6 +113,22 @@ var Track = (function (Component) {
                     return;
                 }
 
+                console.log("to submitBug: " + JSON.stringify(this.state.bug));
+                var bug = this.state.bug;
+                var title = bug.title;
+                var parts = title.split(" ");
+
+                var slug = "";
+                for (var i = 0; i < parts.length; i++) {
+                    var word = parts[i];
+                    slug += word;
+                    if (i != parts.length - 1) slug += "-";
+                }
+
+                slug = slug.replace("?", "-");
+                bug.slug = slug;
+                console.log(JSON.stringify(bug));
+
                 var bug = Object.assign({}, this.state.bug); // var bug = this.state.bug
                 console.log(JSON.stringify(this.props.track._id));
                 bug.track = this.props.track._id;
@@ -140,7 +157,11 @@ var Track = (function (Component) {
                         React.createElement(
                             "h4",
                             { className: "list-group-item-heading" },
-                            bug.title
+                            React.createElement(
+                                "a",
+                                { href: "/bug/" + bug.slug },
+                                bug.title
+                            )
                         ),
                         React.createElement(
                             "p",

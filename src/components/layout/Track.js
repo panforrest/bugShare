@@ -14,7 +14,8 @@ class Track extends Component {
             bug: {
                 title:'',
                 detail:'',
-                response: ''
+                response: '',
+                slug: ''
             }
     	}
     }
@@ -35,12 +36,12 @@ class Track extends Component {
             //  track: track
             // })
             this.props.tracksReceived(tracks)
-            _this.fetchPosts()
+            _this.fetchBugs()
         })
 	}
 
 
-    fetchPosts(){
+    fetchBugs(){
         console.log('fetchPosts: ')
         console.log(JSON.stringify(this.props.track._id))
         if (this.props.track._id == null){
@@ -79,6 +80,23 @@ class Track extends Component {
             return
         }
 
+        console.log('to submitBug: '+JSON.stringify(this.state.bug))
+        var bug = this.state.bug
+        var title = bug.title
+        var parts = title.split(' ')
+
+        var slug = ''
+        for (var i=0; i<parts.length; i++){
+            var word = parts[i]
+            slug += word
+            if (i != parts.length-1)
+                slug += '-'
+        }
+
+        slug = slug.replace('?', '-')
+        bug['slug'] = slug
+        console.log(JSON.stringify(bug))
+
         var bug = Object.assign({}, this.state.bug)   // var bug = this.state.bug
         console.log(JSON.stringify(this.props.track._id))
         bug['track'] = this.props.track._id
@@ -102,7 +120,7 @@ class Track extends Component {
         var bugList = this.props.bugs.map((bug, i) => {
             return (
                 <a key={i} href="#" className="list-group-item">
-                        <h4 className="list-group-item-heading">{bug.title}</h4>
+                        <h4 className="list-group-item-heading"><a href={'/bug/'+bug.slug}>{bug.title}</a></h4>
                         <p className="list-group-item-text">{bug.detail}</p>
                 </a> 
             )

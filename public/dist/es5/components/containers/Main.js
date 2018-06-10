@@ -26,6 +26,7 @@ var _layout = require("../layout/");
 var Track = _layout.Track;
 var Register = _layout.Register;
 var Account = _layout.Account;
+var Bug = _layout.Bug;
 // import { Track } from '../layout'
 
 var Main = (function (Component) {
@@ -62,6 +63,8 @@ var Main = (function (Component) {
                 if (page == "register") content = React.createElement(Register, null);
 
                 if (page == "account") content = React.createElement(Account, null);
+
+                if (page == "bug") content = React.createElement(Bug, { slug: this.props.slug });
 
                 return React.createElement(
                     "div",

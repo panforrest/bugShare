@@ -3,6 +3,7 @@
 import Track from './Track'
 import Account from './Account'
 import Register from './Register'
+import Bug from './Bug'
 
 export {
 
@@ -10,6 +11,7 @@ export {
 	// Main,
 	Track,
 	Account,
-    Register
+    Register,
+    Bug
 
 }
