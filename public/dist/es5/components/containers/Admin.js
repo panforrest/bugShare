@@ -10,13 +10,6 @@ var _inherits = function (subClass, superClass) { if (typeof superClass !== "fun
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-// <h2>User is not logged in. </h2>
-// export default connect(stateToProps, dispatchToProps)(Admin)
-// <h3>Create Bug</h3>
-// <input onChange={this.updateBug.bind(this)} type="text" id="title" placeholder="Title" /><br />
-// <textarea onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
-// <textarea onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
-// <input onClick={this.submitBug.bind(this)} type="submit" value="Submit" />
 var _react = require("react");
 
 var React = _interopRequire(_react);
@@ -34,6 +27,8 @@ var Admin = (function (Component) {
         _get(Object.getPrototypeOf(Admin.prototype), "constructor", this).call(this);
         this.state = {
             bug: {
+                profile: "",
+                track: "",
                 title: "",
                 details: "",
                 response: ""
@@ -67,6 +62,33 @@ var Admin = (function (Component) {
         register: {
             value: function register(visitor) {
                 var _this = this;
+                var email = visitor.email;
+                var firstName = visitor.firstName;
+                var lastName = visitor.lastName;
+                var password = visitor.password;
+
+                if (email.length == 0) {
+                    alert("Please fill in Email!");
+                    return;
+                }
+
+
+                if (firstName.length == 0) {
+                    alert("Please fill in First Name!");
+                    return;
+                }
+
+
+                if (lastName.length == 0) {
+                    alert("Please fill in Last Name!");
+                    return;
+                }
+
+                if (password.length == 0) {
+                    alert("Please fill in Password!");
+                    return;
+                }
+
                 APIManager.post("/account/register", visitor, function (err, response) {
                     if (err) {
                         var msg = err.message || err;
@@ -84,6 +106,19 @@ var Admin = (function (Component) {
         login: {
             value: function login(credentials) {
                 var _this = this;
+                var email = credentials.email;
+                var password = credentials.password;
+
+                if (email.length == 0) {
+                    alert("Please fill in Email!");
+                    return;
+                }
+
+                if (password.length == 0) {
+                    alert("Please fill in Password!");
+                    return;
+                }
+
                 APIManager.post("/account/login", credentials, function (err, response) {
                     if (err) {
                         var msg = err.message || err;
@@ -119,6 +154,12 @@ var Admin = (function (Component) {
                 console.log("to submitTrack: " + JSON.stringify(this.state.track));
                 var track = this.state.track;
                 var name = track.name;
+
+                if (name.length == 0) {
+                    alert("Please fill in Track Name!");
+                    return;
+                }
+
                 var parts = name.split(" ");
 
                 var slug = "";

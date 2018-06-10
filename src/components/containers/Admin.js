@@ -1,10 +1,3 @@
-                    // <h2>User is not logged in. </h2>
-                    // export default connect(stateToProps, dispatchToProps)(Admin)
-                        // <h3>Create Bug</h3>
-                        // <input onChange={this.updateBug.bind(this)} type="text" id="title" placeholder="Title" /><br />
-                        // <textarea onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
-                        // <textarea onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
-                        // <input onClick={this.submitBug.bind(this)} type="submit" value="Submit" />
 import React, { Component } from 'react'
 import actions from '../../actions'
 import { connect } from 'react-redux'
@@ -17,6 +10,8 @@ class Admin extends Component {
         super()
         this.state = {
             bug: {
+                profile: '',
+                track: '',
                 title: '',
                 details: '',
                 response: ''
@@ -41,6 +36,33 @@ class Admin extends Component {
     }
 
     register(visitor){
+        var email = visitor.email
+        var firstName = visitor.firstName
+        var lastName = visitor.lastName
+        var password = visitor.password
+
+        if (email.length == 0) {
+            alert('Please fill in Email!')
+            return              
+        }
+
+        
+        if (firstName.length == 0) {
+            alert('Please fill in First Name!')
+            return              
+        }
+
+        
+        if (lastName.length == 0) {
+            alert('Please fill in Last Name!')
+            return              
+        }
+
+        if (password.length == 0) {
+            alert('Please fill in Password!')
+            return              
+        }
+
         APIManager.post('/account/register', visitor, (err, response) => {
             if (err) {
              const msg = err.message || err
@@ -54,6 +76,19 @@ class Admin extends Component {
     }
 
     login(credentials){
+        var email = credentials.email
+        var password = credentials.password
+
+        if (email.length == 0) {
+            alert('Please fill in Email!')
+            return              
+        }
+
+        if (password.length == 0) {
+            alert('Please fill in Password!')
+            return              
+        }
+
         APIManager.post('/account/login', credentials, (err, response) => {
             if (err) {
                 const msg = err.message || err
@@ -82,6 +117,12 @@ class Admin extends Component {
         console.log('to submitTrack: '+JSON.stringify(this.state.track))
         var track = this.state.track
         var name = track.name
+
+        if (name.length == 0) {
+            alert('Please fill in Track Name!')
+            return 
+        }
+        
         var parts = name.split(' ')
 
         var slug = ''

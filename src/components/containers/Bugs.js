@@ -39,12 +39,19 @@ class Bugs extends Component {
         })
 
 		return(
-			<div>
-                This is Bugs List:
-                    <ol>
-	                    {bugs}
-                    </ol>
-            </div>    
+    		<div className="container clearifx">
+                <div className="col_three_fifth bothsidebar nobottommargin">
+                    <div className="fancy-title title-border">
+                        <h3>Bugs that are recorded by bugShare users:</h3>
+                    </div>
+
+                    <div id="posts" className="events small-thumbs">
+                        {bugs}
+                    </div>    
+                </div>
+                <Admin />
+            </div> 
+
 		)
 	}
 }

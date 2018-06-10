@@ -8,15 +8,6 @@ var _inherits = function (subClass, superClass) { if (typeof superClass !== "fun
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-// <li><a href="#"><i className="icon-time"></i> {this.props.track.address} </a></li>
-// <li><a href="#"><i className="icon-map-marker2"></i> {this.props.track.city} </a></li>
-// <ul className="entry-meta clearfix">
-//     <li><span className="label label-warning">Private</span></li>
-
-// </ul>
-// <div className="entry-content">
-//     <a href={'/track/'+this.props.track.slug} className="btn  btn-danger">Visit</a>
-// </div>
 var _react = require("react");
 
 var React = _interopRequire(_react);
@@ -39,15 +30,6 @@ var TrackPreview = (function (Component) {
                 return React.createElement(
                     "div",
                     { className: "entry clearfix" },
-                    React.createElement(
-                        "div",
-                        { className: "entry-image hidden-sm" },
-                        React.createElement(
-                            "a",
-                            { href: "/track/" + this.props.track.slug },
-                            React.createElement("img", { src: "images/events/thumbs/1.jpg", alt: "tenetur" })
-                        )
-                    ),
                     React.createElement(
                         "div",
                         { className: "entry-c" },

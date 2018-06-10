@@ -121,8 +121,8 @@ class Track extends Component {
         var bugList = this.props.bugs.map((bug, i) => {
             return (
                 <a key={i} href="#" className="list-group-item">
-                        <h4 className="list-group-item-heading"><a href={'/bug/'+bug.slug}>{bug.title}</a></h4>
-                        <p className="list-group-item-text">{bug.detail}</p>
+                    <h4 className="list-group-item-heading"><a href={'/bug/'+bug.slug}>{bug.title}, {bug.timestamp}</a></h4>
+                    <p className="list-group-item-text">{bug.detail}</p>
                 </a> 
             )
         })

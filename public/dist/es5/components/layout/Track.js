@@ -162,7 +162,9 @@ var Track = (function (Component) {
                             React.createElement(
                                 "a",
                                 { href: "/bug/" + bug.slug },
-                                bug.title
+                                bug.title,
+                                ", ",
+                                bug.timestamp
                             )
                         ),
                         React.createElement(

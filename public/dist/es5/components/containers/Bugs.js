@@ -67,13 +67,26 @@ var Bugs = (function (Component) {
 
 				return React.createElement(
 					"div",
-					null,
-					"This is Bugs List:",
+					{ className: "container clearifx" },
 					React.createElement(
-						"ol",
-						null,
-						bugs
-					)
+						"div",
+						{ className: "col_three_fifth bothsidebar nobottommargin" },
+						React.createElement(
+							"div",
+							{ className: "fancy-title title-border" },
+							React.createElement(
+								"h3",
+								null,
+								"Bugs that are recorded by bugShare users:"
+							)
+						),
+						React.createElement(
+							"div",
+							{ id: "posts", className: "events small-thumbs" },
+							bugs
+						)
+					),
+					React.createElement(Admin, null)
 				);
 			},
 			writable: true,

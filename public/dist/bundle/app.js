@@ -587,14 +587,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <h2>User is not logged in. </h2>
-// export default connect(stateToProps, dispatchToProps)(Admin)
-// <h3>Create Bug</h3>
-// <input onChange={this.updateBug.bind(this)} type="text" id="title" placeholder="Title" /><br />
-// <textarea onChange={this.updateBug.bind(this)} type="text" id="detail" placeholder="Detail" /><br />
-// <textarea onChange={this.updateBug.bind(this)} type="text" id="response" placeholder="Response" /><br />
-// <input onClick={this.submitBug.bind(this)} type="submit" value="Submit" />
-
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Admin = function (_Component) {
     _inherits(Admin, _Component);
@@ -606,6 +599,8 @@ var Admin = function (_Component) {
 
         _this.state = {
             bug: {
+                profile: '',
+                track: '',
                 title: '',
                 details: '',
                 response: ''
@@ -638,6 +633,31 @@ var Admin = function (_Component) {
         value: function register(visitor) {
             var _this3 = this;
 
+            var email = visitor.email;
+            var firstName = visitor.firstName;
+            var lastName = visitor.lastName;
+            var password = visitor.password;
+
+            if (email.length == 0) {
+                alert('Please fill in Email!');
+                return;
+            }
+
+            if (firstName.length == 0) {
+                alert('Please fill in First Name!');
+                return;
+            }
+
+            if (lastName.length == 0) {
+                alert('Please fill in Last Name!');
+                return;
+            }
+
+            if (password.length == 0) {
+                alert('Please fill in Password!');
+                return;
+            }
+
             _utils.APIManager.post('/account/register', visitor, function (err, response) {
                 if (err) {
                     var msg = err.message || err;
@@ -653,6 +673,19 @@ var Admin = function (_Component) {
         key: 'login',
         value: function login(credentials) {
             var _this4 = this;
+
+            var email = credentials.email;
+            var password = credentials.password;
+
+            if (email.length == 0) {
+                alert('Please fill in Email!');
+                return;
+            }
+
+            if (password.length == 0) {
+                alert('Please fill in Password!');
+                return;
+            }
 
             _utils.APIManager.post('/account/login', credentials, function (err, response) {
                 if (err) {
@@ -686,6 +719,12 @@ var Admin = function (_Component) {
             console.log('to submitTrack: ' + JSON.stringify(this.state.track));
             var track = this.state.track;
             var name = track.name;
+
+            if (name.length == 0) {
+                alert('Please fill in Track Name!');
+                return;
+            }
+
             var parts = name.split(' ');
 
             var slug = '';
@@ -1315,7 +1354,9 @@ var Track = function (_Component) {
                         _react2.default.createElement(
                             'a',
                             { href: '/bug/' + bug.slug },
-                            bug.title
+                            bug.title,
+                            ', ',
+                            bug.timestamp
                         )
                     ),
                     _react2.default.createElement(
@@ -1547,16 +1588,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <li><a href="#"><i className="icon-time"></i> {this.props.track.address} </a></li>
-// <li><a href="#"><i className="icon-map-marker2"></i> {this.props.track.city} </a></li>
-// <ul className="entry-meta clearfix">
-//     <li><span className="label label-warning">Private</span></li>
-
-// </ul>
-// <div className="entry-content">
-//     <a href={'/track/'+this.props.track.slug} className="btn  btn-danger">Visit</a>
-// </div>
-
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var TrackPreview = function (_Component) {
     _inherits(TrackPreview, _Component);
@@ -1573,15 +1605,6 @@ var TrackPreview = function (_Component) {
             return _react2.default.createElement(
                 "div",
                 { className: "entry clearfix" },
-                _react2.default.createElement(
-                    "div",
-                    { className: "entry-image hidden-sm" },
-                    _react2.default.createElement(
-                        "a",
-                        { href: '/track/' + this.props.track.slug },
-                        _react2.default.createElement("img", { src: "images/events/thumbs/1.jpg", alt: "tenetur" })
-                    )
-                ),
                 _react2.default.createElement(
                     "div",
                     { className: "entry-c" },
@@ -1692,13 +1715,26 @@ var Bugs = function (_Component) {
 
 			return _react2.default.createElement(
 				'div',
-				null,
-				'This is Bugs List:',
+				{ className: 'container clearifx' },
 				_react2.default.createElement(
-					'ol',
-					null,
-					bugs
-				)
+					'div',
+					{ className: 'col_three_fifth bothsidebar nobottommargin' },
+					_react2.default.createElement(
+						'div',
+						{ className: 'fancy-title title-border' },
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Bugs that are recorded by bugShare users:'
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ id: 'posts', className: 'events small-thumbs' },
+						bugs
+					)
+				),
+				_react2.default.createElement(Admin, null)
 			);
 		}
 	}]);
@@ -2283,6 +2319,31 @@ var Register = function (_Component) {
     }, {
         key: 'register',
         value: function register(visitor) {
+            var email = visitor.email;
+            var firstName = visitor.firstName;
+            var lastName = visitor.lastName;
+            var password = visitor.password;
+
+            if (email.length == 0) {
+                alert('Please fill in Email!');
+                return;
+            }
+
+            if (firstName.length == 0) {
+                alert('Please fill in First Name!');
+                return;
+            }
+
+            if (lastName.length == 0) {
+                alert('Please fill in Last Name!');
+                return;
+            }
+
+            if (password.length == 0) {
+                alert('Please fill in Password!');
+                return;
+            }
+
             _utils.APIManager.post('/account/register', visitor, function (err, response) {
                 if (err) {
                     var msg = err.message || err;
@@ -2476,7 +2537,6 @@ var Account = function (_Component) {
       return _react2.default.createElement(
         'div',
         null,
-        'This is Account Layout.',
         _react2.default.createElement(
           'h3',
           null,
