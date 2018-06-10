@@ -1247,9 +1247,15 @@ var Track = function (_Component) {
             var _this5 = this;
 
             event.preventDefault();
+            if (this.props.currentUser == null) {
+                alert('Please log in to record new bug');
+                return;
+            }
+
             var bug = Object.assign({}, this.state.bug); // var bug = this.state.bug
             console.log(JSON.stringify(this.props.track._id));
             bug['track'] = this.props.track._id;
+            bug['profile'] = this.props.currentUser.id;
 
             _utils.APIManager.post('/api/bug', bug, function (err, response) {
                 if (err) {
@@ -1331,7 +1337,8 @@ var stateToProps = function stateToProps(state) {
 
     return {
         track: tracksArray.length == 0 ? { name: '' } : tracksArray[0],
-        bugs: state.bug.list
+        bugs: state.bug.list,
+        currentUser: state.account.currentUser
     };
 };
 
