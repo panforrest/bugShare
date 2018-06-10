@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Signup } from '../presentation'
 import { APIManager } from '../../utils'
 import Dropzone from 'react-dropzone'
+import sha1 from 'sha1'
 
 class Admin extends Component {
 
@@ -178,7 +179,40 @@ class Admin extends Component {
             var result = response.result
             this.props.bugCreated(bug)
         })
-    }    
+    } 
+
+    uploadImage(files){
+        const image = files[0]
+
+        const cloudName = 'hmffqrvhq'
+        const url ='https://api.cloudinary.com/v1_1/'+cloudName+'/image/upload'
+
+
+        let timestamp = Date.now() / 1000
+        const uploadPreset = 'ydm4pinf'
+
+        const paramsStr = 'timestamp='+timestamp+'&upload_preset='+uploadPreset+'rFL-RZTX81XWxpLcuDidqKN3WbU'
+        const signature = sha1(paramsStr)
+
+        const params = {
+            'api_key': '432944256736493',
+            'timestamp': timestamp,
+            'upload_preset': uploadPreset,
+            'signature': signature
+        }
+
+        // console.log('uploadImage: ')
+        APIManager.upload(url, image, params, (err, response) => {
+            if (err) {
+                console.log('UPLOAD ERROR: '+JSON.stringify(err))
+                return
+            }
+
+            console.log('UPLOAD COMPLETE: '+JSON.stringify(response.body))
+
+        })
+    }
+   
 
     render(){
     	return(
@@ -191,7 +225,7 @@ class Admin extends Component {
 
                         <h3>Create a new Track</h3>
                         <input onChange={this.updateTrack.bind(this)} type="text" id="name" placeholder="Track Name" className="form-control" style={{marginTop:1, marginLeft:12, width:95+'%'}}/><br />
-                        <Dropzone />
+                        <Dropzone onDrop={this.uploadImage.bind(this)}/>
                         <br />
                         <button onClick={this.submitTrack.bind(this)} className="btn btn-success">Submit New Track</button><br />
                     </div>

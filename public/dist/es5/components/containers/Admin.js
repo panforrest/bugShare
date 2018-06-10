@@ -22,6 +22,8 @@ var Signup = require("../presentation").Signup;
 var APIManager = require("../../utils").APIManager;
 var Dropzone = _interopRequire(require("react-dropzone"));
 
+var sha1 = _interopRequire(require("sha1"));
+
 var Admin = (function (Component) {
     function Admin() {
         _classCallCheck(this, Admin);
@@ -226,6 +228,40 @@ var Admin = (function (Component) {
             writable: true,
             configurable: true
         },
+        uploadImage: {
+            value: function uploadImage(files) {
+                var image = files[0];
+
+                var cloudName = "hmffqrvhq";
+                var url = "https://api.cloudinary.com/v1_1/" + cloudName + "/image/upload";
+
+
+                var timestamp = Date.now() / 1000;
+                var uploadPreset = "ydm4pinf";
+
+                var paramsStr = "timestamp=" + timestamp + "&upload_preset=" + uploadPreset + "rFL-RZTX81XWxpLcuDidqKN3WbU";
+                var signature = sha1(paramsStr);
+
+                var params = {
+                    api_key: "432944256736493",
+                    timestamp: timestamp,
+                    upload_preset: uploadPreset,
+                    signature: signature
+                };
+
+                // console.log('uploadImage: ')
+                APIManager.upload(url, image, params, function (err, response) {
+                    if (err) {
+                        console.log("UPLOAD ERROR: " + JSON.stringify(err));
+                        return;
+                    }
+
+                    console.log("UPLOAD COMPLETE: " + JSON.stringify(response.body));
+                });
+            },
+            writable: true,
+            configurable: true
+        },
         render: {
             value: function render() {
                 return React.createElement(
@@ -247,7 +283,7 @@ var Admin = (function (Component) {
                         ),
                         React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "name", placeholder: "Track Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
                         React.createElement("br", null),
-                        React.createElement(Dropzone, null),
+                        React.createElement(Dropzone, { onDrop: this.uploadImage.bind(this) }),
                         React.createElement("br", null),
                         React.createElement(
                             "button",

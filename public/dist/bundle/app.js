@@ -589,6 +589,10 @@ var _reactDropzone = __webpack_require__(63);
 
 var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
 
+var _sha = __webpack_require__(70);
+
+var _sha2 = _interopRequireDefault(_sha);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -792,6 +796,36 @@ var Admin = function (_Component) {
             });
         }
     }, {
+        key: 'uploadImage',
+        value: function uploadImage(files) {
+            var image = files[0];
+
+            var cloudName = 'hmffqrvhq';
+            var url = 'https://api.cloudinary.com/v1_1/' + cloudName + '/image/upload';
+
+            var timestamp = Date.now() / 1000;
+            var uploadPreset = 'ydm4pinf';
+
+            var paramsStr = 'timestamp=' + timestamp + '&upload_preset=' + uploadPreset + 'rFL-RZTX81XWxpLcuDidqKN3WbU';
+            var signature = (0, _sha2.default)(paramsStr);
+
+            var params = {
+                'api_key': '432944256736493',
+                'timestamp': timestamp,
+                'upload_preset': uploadPreset,
+                'signature': signature
+
+                // console.log('uploadImage: ')
+            };_utils.APIManager.upload(url, image, params, function (err, response) {
+                if (err) {
+                    console.log('UPLOAD ERROR: ' + JSON.stringify(err));
+                    return;
+                }
+
+                console.log('UPLOAD COMPLETE: ' + JSON.stringify(response.body));
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
@@ -813,7 +847,7 @@ var Admin = function (_Component) {
                     ),
                     _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'name', placeholder: 'Track Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement(_reactDropzone2.default, null),
+                    _react2.default.createElement(_reactDropzone2.default, { onDrop: this.uploadImage.bind(this) }),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
@@ -1991,7 +2025,7 @@ exports.Signup = _Signup2.default;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+				value: true
 });
 
 var _superagent = __webpack_require__(43);
@@ -2002,37 +2036,56 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
 
-	get: function get(endpoint, params, callback) {
-		_superagent2.default.get(endpoint).query(null).set('Accept', 'application/json') //.set('accepte', 'app/json')
-		.end(function (err, response) {
-			//.result((err, result)=>{
-			if (err) {
-				// var err = err.message || err
-				callback(err, null); //alert(err)
-				return;
-			}
+				get: function get(endpoint, params, callback) {
+								_superagent2.default.get(endpoint).query(null).set('Accept', 'application/json') //.set('accepte', 'app/json')
+								.end(function (err, response) {
+												//.result((err, result)=>{
+												if (err) {
+																// var err = err.message || err
+																callback(err, null); //alert(err)
+																return;
+												}
 
-			callback(null, response.body); //console.log(JSON.stringify(response.body))
-		});
-	},
+												callback(null, response.body); //console.log(JSON.stringify(response.body))
+								});
+				},
 
-	post: function post(endpoint, params, callback) {
-		_superagent2.default.post(endpoint) //.get(endpoint)
-		.send(params) //.query(params)
-		.set('Accept', 'application/json').end(function (err, response) {
-			if (err) {
-				callback(err, null);
-				return;
-			}
-			console.log('APIManager: ' + JSON.stringify(response.body));
-			var confirmation = response.body.confirmation;
-			if (confirmation != 'success') {
-				callback({ message: response.body.message }, null);
-				return;
-			}
-			callback(null, response.body); //callback(null, response.result)
-		});
-	}
+				post: function post(endpoint, params, callback) {
+								_superagent2.default.post(endpoint) //.get(endpoint)
+								.send(params) //.query(params)
+								.set('Accept', 'application/json').end(function (err, response) {
+												if (err) {
+																callback(err, null);
+																return;
+												}
+												console.log('APIManager: ' + JSON.stringify(response.body));
+												var confirmation = response.body.confirmation;
+												if (confirmation != 'success') {
+																callback({ message: response.body.message }, null);
+																return;
+												}
+												callback(null, response.body); //callback(null, response.result)
+								});
+				},
+
+				upload: function upload(endpoint, file, params, callback) {
+								console.log('APIManager - upload: ');
+								var uploadRequest = _superagent2.default.post(endpoint);
+
+								uploadRequest.attach('file', file);
+								Object.keys(params).forEach(function (key) {
+												uploadRequest.field(key, params[key]);
+								});
+
+								uploadRequest.end(function (err, resp) {
+												if (err) {
+																callback(err, null);
+																return;
+												}
+
+												callback(null, resp);
+								});
+				}
 };
 
 /***/ }),
