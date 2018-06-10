@@ -20,6 +20,8 @@ var actions = _interopRequire(require("../../actions"));
 var connect = require("react-redux").connect;
 var Signup = require("../presentation").Signup;
 var APIManager = require("../../utils").APIManager;
+var Dropzone = _interopRequire(require("react-dropzone"));
+
 var Admin = (function (Component) {
     function Admin() {
         _classCallCheck(this, Admin);
@@ -243,7 +245,9 @@ var Admin = (function (Component) {
                             null,
                             "Create a new Track"
                         ),
-                        React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "name", placeholder: "Track Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 20 + "%" } }),
+                        React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "name", placeholder: "Track Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
+                        React.createElement("br", null),
+                        React.createElement(Dropzone, null),
                         React.createElement("br", null),
                         React.createElement(
                             "button",

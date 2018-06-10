@@ -42,14 +42,16 @@ class Tracks extends Component {
 			<div className="container clearifx">
                 <div className="col_three_fifth bothsidebar nobottommargin">
                     <div className="fancy-title title-border">
-                        <h3>Tracks</h3>
+                        <h3>Tracks of Bugs</h3>
                     </div>
 
                     <div id="posts" className="events small-thumbs">
                         {trackList}
                     </div>    
                 </div>
-                <Admin />
+                <div className="col_one_fifth bothsidebar nobottommargin">
+                    <Admin />
+                </div> 
             </div>  
 		)
 	}

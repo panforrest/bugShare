@@ -78,7 +78,7 @@ var Tracks = (function (Component) {
 							React.createElement(
 								"h3",
 								null,
-								"Tracks"
+								"Tracks of Bugs"
 							)
 						),
 						React.createElement(
@@ -87,7 +87,11 @@ var Tracks = (function (Component) {
 							trackList
 						)
 					),
-					React.createElement(Admin, null)
+					React.createElement(
+						"div",
+						{ className: "col_one_fifth bothsidebar nobottommargin" },
+						React.createElement(Admin, null)
+					)
 				);
 			},
 			writable: true,

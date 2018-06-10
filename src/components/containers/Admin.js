@@ -3,6 +3,7 @@ import actions from '../../actions'
 import { connect } from 'react-redux'
 import { Signup } from '../presentation'
 import { APIManager } from '../../utils'
+import Dropzone from 'react-dropzone'
 
 class Admin extends Component {
 
@@ -189,7 +190,9 @@ class Admin extends Component {
 
 
                         <h3>Create a new Track</h3>
-                        <input onChange={this.updateTrack.bind(this)} type="text" id="name" placeholder="Track Name" className="form-control" style={{marginTop:1, marginLeft:12, width:20+'%'}}/><br />
+                        <input onChange={this.updateTrack.bind(this)} type="text" id="name" placeholder="Track Name" className="form-control" style={{marginTop:1, marginLeft:12, width:95+'%'}}/><br />
+                        <Dropzone />
+                        <br />
                         <button onClick={this.submitTrack.bind(this)} className="btn btn-success">Submit New Track</button><br />
                     </div>
                 }    

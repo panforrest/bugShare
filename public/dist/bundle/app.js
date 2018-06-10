@@ -521,7 +521,7 @@ var Tracks = function (_Component) {
 						_react2.default.createElement(
 							'h3',
 							null,
-							'Tracks'
+							'Tracks of Bugs'
 						)
 					),
 					_react2.default.createElement(
@@ -530,7 +530,11 @@ var Tracks = function (_Component) {
 						trackList
 					)
 				),
-				_react2.default.createElement(_Admin2.default, null)
+				_react2.default.createElement(
+					'div',
+					{ className: 'col_one_fifth bothsidebar nobottommargin' },
+					_react2.default.createElement(_Admin2.default, null)
+				)
 			);
 		}
 	}]);
@@ -580,6 +584,10 @@ var _reactRedux = __webpack_require__(2);
 var _presentation = __webpack_require__(34);
 
 var _utils = __webpack_require__(3);
+
+var _reactDropzone = __webpack_require__(63);
+
+var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -803,7 +811,9 @@ var Admin = function (_Component) {
                         null,
                         'Create a new Track'
                     ),
-                    _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'name', placeholder: 'Track Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 20 + '%' } }),
+                    _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'name', placeholder: 'Track Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
+                    _react2.default.createElement('br', null),
+                    _react2.default.createElement(_reactDropzone2.default, null),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
@@ -1886,13 +1896,13 @@ var Signup = function (_Component) {
                         null,
                         'Sign up'
                     ),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 20 + '%' } }),
+                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 20 + '%' } }),
+                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'firstName', placeholder: 'First Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 20 + '%' } }),
+                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'lastName', placeholder: 'Last Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'password', id: 'password', placeholder: 'Password', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 20 + '%' } }),
+                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'password', id: 'password', placeholder: 'Password', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
@@ -1906,9 +1916,9 @@ var Signup = function (_Component) {
                         null,
                         'Log in'
                     ),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 20 + '%' } }),
+                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'text', id: 'email', placeholder: 'Email', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'password', id: 'password', placeholder: 'Password', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 20 + '%' } }),
+                    _react2.default.createElement('input', { onChange: this.update.bind(this), type: 'password', id: 'password', placeholder: 'Password', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
                         'button',
