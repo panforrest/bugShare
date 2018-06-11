@@ -20,7 +20,9 @@ class Admin extends Component {
             },
             track: {
                 name: '',
-                slug:''
+                slug:'',
+                url: '',
+                image: ''
             }
         }
     }
@@ -209,12 +211,22 @@ class Admin extends Component {
             }
 
             console.log('UPLOAD COMPLETE: '+JSON.stringify(response.body))
+            const imageUrl = response.body['secure_url']
+
+            var updatedTrack = Object.assign({}, this.state.track)
+            updatedTrack['image'] = response.body['secure_url']
+            this.setState({
+                track: updatedTrack
+            })
+
 
         })
     }
    
 
     render(){
+        const image = (this.state.track.image == null) ? '' : this.state.track.image
+
     	return(
     		<div>
                 {(this.props.currentUser == null) ? <Signup onRegister={this.register.bind(this)} onLogin={this.login.bind(this)}/> : 
@@ -225,6 +237,7 @@ class Admin extends Component {
 
                         <h3>Create a new Track</h3>
                         <input onChange={this.updateTrack.bind(this)} type="text" id="name" placeholder="Track Name" className="form-control" style={{marginTop:1, marginLeft:12, width:95+'%'}}/><br />
+                        <img src={image} /><br />
                         <Dropzone onDrop={this.uploadImage.bind(this)}/>
                         <br />
                         <button onClick={this.submitTrack.bind(this)} className="btn btn-success">Submit New Track</button><br />

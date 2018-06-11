@@ -39,7 +39,9 @@ var Admin = (function (Component) {
             },
             track: {
                 name: "",
-                slug: ""
+                slug: "",
+                url: "",
+                image: ""
             }
         };
     }
@@ -230,6 +232,7 @@ var Admin = (function (Component) {
         },
         uploadImage: {
             value: function uploadImage(files) {
+                var _this = this;
                 var image = files[0];
 
                 var cloudName = "hmffqrvhq";
@@ -257,6 +260,14 @@ var Admin = (function (Component) {
                     }
 
                     console.log("UPLOAD COMPLETE: " + JSON.stringify(response.body));
+                    var imageUrl = response.body.secure_url;
+
+                    var updatedTrack = Object.assign({}, _this.state.track);
+                    updatedTrack.image = response.body.secure_url;
+                    _this.setState({
+                        track: updatedTrack
+                    });
+
                 });
             },
             writable: true,
@@ -264,6 +275,8 @@ var Admin = (function (Component) {
         },
         render: {
             value: function render() {
+                var image = this.state.track.image == null ? "" : this.state.track.image;
+
                 return React.createElement(
                     "div",
                     null,
@@ -282,6 +295,8 @@ var Admin = (function (Component) {
                             "Create a new Track"
                         ),
                         React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "name", placeholder: "Track Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
+                        React.createElement("br", null),
+                        React.createElement("img", { src: image }),
                         React.createElement("br", null),
                         React.createElement(Dropzone, { onDrop: this.uploadImage.bind(this) }),
                         React.createElement("br", null),
