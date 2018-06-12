@@ -132,6 +132,7 @@ var Track = (function (Component) {
                 }
 
                 slug = slug.replace("?", "-");
+                // slug = slug.replace('"', '-')
                 bug.slug = slug;
                 console.log(JSON.stringify(bug));
 
@@ -202,16 +203,19 @@ var Track = (function (Component) {
                                     React.createElement(
                                         "h4",
                                         null,
+                                        "TRACK NAME: ",
                                         this.props.track.name
                                     ),
-                                    React.createElement("input", { onChange: this.updateBug.bind(this), placeholder: "Bug Title", id: "title", className: "form-control", type: "text" }),
+                                    React.createElement("input", { onChange: this.updateBug.bind(this), placeholder: "Name your bug", id: "title", className: "form-control", type: "text" }),
                                     React.createElement("br", null),
-                                    React.createElement("textarea", { onChange: this.updateBug.bind(this), placeholder: "Bug Detail", id: "detail", className: "form-control" }),
+                                    React.createElement("textarea", { onChange: this.updateBug.bind(this), placeholder: "When/Where", id: "when_where", className: "form-control" }),
+                                    React.createElement("br", null),
+                                    React.createElement("textarea", { onChange: this.updateBug.bind(this), placeholder: "Symptom", id: "symptom", className: "form-control" }),
                                     React.createElement("br", null),
                                     React.createElement(
                                         "button",
                                         { onClick: this.submitBug.bind(this), className: "btn btn-success" },
-                                        "Record Bug"
+                                        "Record a new bug"
                                     ),
                                     React.createElement("br", null),
                                     React.createElement("hr", { style: { borderTop: "1px solid red #444" } }),

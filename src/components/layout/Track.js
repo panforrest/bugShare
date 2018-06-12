@@ -96,6 +96,7 @@ class Track extends Component {
         }
 
         slug = slug.replace('?', '-')
+        // slug = slug.replace('"', '-')
         bug['slug'] = slug
         console.log(JSON.stringify(bug))
 
@@ -137,10 +138,11 @@ class Track extends Component {
                         <div className="container clearfix">
                             <div className="postcontent nobottommargin clearfix">
 
-                                <h4>{this.props.track.name}</h4>
-                                <input onChange={this.updateBug.bind(this)} placeholder="Bug Title" id="title" className="form-control" type="text" /><br />
-                                <textarea onChange={this.updateBug.bind(this)} placeholder="Bug Detail" id="detail" className="form-control"></textarea><br /> 
-                                <button onClick={this.submitBug.bind(this)} className="btn btn-success">Record Bug</button><br />
+                                <h4>TRACK NAME: {this.props.track.name}</h4>
+                                <input onChange={this.updateBug.bind(this)} placeholder="Name your bug" id="title" className="form-control" type="text" /><br />
+                                <textarea onChange={this.updateBug.bind(this)} placeholder="When/Where" id="when_where" className="form-control"></textarea><br /> 
+                                <textarea onChange={this.updateBug.bind(this)} placeholder="Symptom" id="symptom" className="form-control"></textarea><br /> 
+                                <button onClick={this.submitBug.bind(this)} className="btn btn-success">Record a new bug</button><br />
                                 <hr style={{borderTop: '1px solid red #444'}} />
                                 {bugList}
 

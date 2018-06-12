@@ -116,8 +116,30 @@ class Admin extends Component {
         })
     }
 
+    slugify(string) {
+      return string
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "")
+        .replace(/\-\-+/g, "-")
+        .replace(/^-+/, "")
+        .replace(/-+$/, "");
+        .replace(/\s+/g, '-') // Replace spaces with
+        .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+        .replace(/&/g, '-and-') // Replace & with ‘and’
+        .replace(/["']/g, "");// Replace " ' with ‘’
+        .replace(/['"]+/g, '')
+        .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+        .replace(/\-\-+/g, '-') // Replace multiple — with single -
+        .replace(/^-+/, '') // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
+    }
+
+
     submitTrack(event){
         event.preventDefault()
+        // var _this = this
         console.log('to submitTrack: '+JSON.stringify(this.state.track))
         var track = this.state.track
         var name = track.name
@@ -137,7 +159,10 @@ class Admin extends Component {
                 slug += '-'
         }
 
-        slug = slug.replace('?', '-')
+        slug = slug.replace('/', '-')
+        slug = slug.replace(/['"]+/g, '')
+        slug = slug.replace(/[/]+/g, '')
+        // var slug = _this.slugify(name)
         track['slug'] = slug
         console.log(JSON.stringify(track))
 
@@ -239,6 +264,7 @@ class Admin extends Component {
                         <h3>Create a new Track</h3>
                         <input onChange={this.updateTrack.bind(this)} type="text" id="name" placeholder="Track Name" className="form-control" style={{marginTop:1, marginLeft:12, width:95+'%'}}/><br />
                         <input onChange={this.updateTrack.bind(this)} type="text" id="url" placeholder="Track Url" className="form-control" style={{marginTop:1, marginLeft:12, width:95+'%'}}/><br />
+                        <input onChange={this.updateTrack.bind(this)} type="text" id="description" placeholder="Track Description" className="form-control" style={{marginTop:1, marginLeft:12, width:95+'%'}}/><br />
                         <img src={image} /><br />
                         <h6>Click below, upload image</h6>
                         <Dropzone onDrop={this.uploadImage.bind(this)}/>

@@ -299,6 +299,8 @@ var Admin = (function (Component) {
                         React.createElement("br", null),
                         React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "url", placeholder: "Track Url", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
                         React.createElement("br", null),
+                        React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "description", placeholder: "Track Description", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
+                        React.createElement("br", null),
                         React.createElement("img", { src: image }),
                         React.createElement("br", null),
                         React.createElement(

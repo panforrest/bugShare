@@ -2,7 +2,8 @@ var mongoose = require('mongoose')
 
 var TrackSchema = new mongoose.Schema({
 	name:{type:String, default:''},
-    url: {type:String, default:''},  
+    url: {type:String, default:''}, 
+    description: {type:String, default:''}, 
     image: {type:String, default:''}, 
 	slug:{type:String, default:''},
 	timestamp:{type:Date, default: Date.now},
@@ -17,6 +18,7 @@ TrackSchema.methods.summary = function(){
         url: this.url,
         image: this.image,
         slug:this.slug,
+        description: this.description,
         timestamp:this.timestamp
 	}
 

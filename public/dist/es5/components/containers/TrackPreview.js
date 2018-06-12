@@ -77,7 +77,8 @@ var TrackPreview = (function (Component) {
                             React.createElement(
                                 "p",
                                 null,
-                                "Description: "
+                                "Description: ",
+                                this.props.track.description
                             )
                         )
                     )

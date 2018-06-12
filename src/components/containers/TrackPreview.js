@@ -28,7 +28,7 @@ class TrackPreview extends Component {
 
                     <hr style={{borderTop:'1px solid #ddd'}} />
                     <div className="entry-content">
-                        <p>Description: </p>
+                        <p>Description: {this.props.track.description}</p>
                     </div>
 
                 </div>

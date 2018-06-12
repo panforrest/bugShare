@@ -753,6 +753,8 @@ var Admin = function (_Component) {
                     _react2.default.createElement('br', null),
                     _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'url', placeholder: 'Track Url', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
+                    _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'description', placeholder: 'Track Description', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
+                    _react2.default.createElement('br', null),
                     _react2.default.createElement('img', { src: image }),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
@@ -1712,7 +1714,7 @@ var Bug = function (_Component) {
                                     null,
                                     'Add Your Solution'
                                 ),
-                                _react2.default.createElement('textarea', { onChange: this.updateSolution.bind(this), className: 'form-control', type: 'text', id: 'text', placeholder: 'Provide Your Solution or Contribute Your Response' }),
+                                _react2.default.createElement('textarea', { onChange: this.updateSolution.bind(this), className: 'form-control', type: 'text', id: 'text', placeholder: 'Provide Your Solution or Contribute Your Response/experience' }),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement(
                                     'button',
@@ -2251,6 +2253,7 @@ var Track = function (_Component) {
             }
 
             slug = slug.replace('?', '-');
+            // slug = slug.replace('"', '-')
             bug['slug'] = slug;
             console.log(JSON.stringify(bug));
 
@@ -2318,16 +2321,19 @@ var Track = function (_Component) {
                                 _react2.default.createElement(
                                     'h4',
                                     null,
+                                    'TRACK NAME: ',
                                     this.props.track.name
                                 ),
-                                _react2.default.createElement('input', { onChange: this.updateBug.bind(this), placeholder: 'Bug Title', id: 'title', className: 'form-control', type: 'text' }),
+                                _react2.default.createElement('input', { onChange: this.updateBug.bind(this), placeholder: 'Name your bug', id: 'title', className: 'form-control', type: 'text' }),
                                 _react2.default.createElement('br', null),
-                                _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'Bug Detail', id: 'detail', className: 'form-control' }),
+                                _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'When/Where', id: 'when_where', className: 'form-control' }),
+                                _react2.default.createElement('br', null),
+                                _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'Symptom', id: 'symptom', className: 'form-control' }),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement(
                                     'button',
                                     { onClick: this.submitBug.bind(this), className: 'btn btn-success' },
-                                    'Record Bug'
+                                    'Record a new bug'
                                 ),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement('hr', { style: { borderTop: '1px solid red #444' } }),
@@ -2771,7 +2777,8 @@ var TrackPreview = function (_Component) {
                         _react2.default.createElement(
                             'p',
                             null,
-                            'Description: '
+                            'Description: ',
+                            this.props.track.description
                         )
                     )
                 )
