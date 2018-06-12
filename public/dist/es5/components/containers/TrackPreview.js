@@ -64,8 +64,6 @@ var TrackPreview = (function (Component) {
                                 React.createElement(
                                     "a",
                                     { href: "#" },
-                                    React.createElement("i", { className: "icon-time" }),
-                                    " ",
                                     this.props.track.url,
                                     " "
                                 )
@@ -76,7 +74,6 @@ var TrackPreview = (function (Component) {
                                 React.createElement(
                                     "a",
                                     { href: "#" },
-                                    React.createElement("i", { className: "icon-map-marker2" }),
                                     "  "
                                 )
                             )

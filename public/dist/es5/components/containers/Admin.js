@@ -287,7 +287,7 @@ var Admin = (function (Component) {
                         React.createElement(
                             "h2",
                             null,
-                            "Welcome, ",
+                            "Hi, ",
                             this.props.currentUser.firstName
                         ),
                         React.createElement(
@@ -297,8 +297,15 @@ var Admin = (function (Component) {
                         ),
                         React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "name", placeholder: "Track Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
                         React.createElement("br", null),
+                        React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "url", placeholder: "Track Url", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
+                        React.createElement("br", null),
                         React.createElement("img", { src: image }),
                         React.createElement("br", null),
+                        React.createElement(
+                            "h6",
+                            null,
+                            "Click below, upload image"
+                        ),
                         React.createElement(Dropzone, { onDrop: this.uploadImage.bind(this) }),
                         React.createElement("br", null),
                         React.createElement(

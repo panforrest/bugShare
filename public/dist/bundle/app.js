@@ -919,7 +919,7 @@ var Admin = function (_Component) {
                     _react2.default.createElement(
                         'h2',
                         null,
-                        'Welcome, ',
+                        'Hi, ',
                         this.props.currentUser.firstName
                     ),
                     _react2.default.createElement(
@@ -929,8 +929,15 @@ var Admin = function (_Component) {
                     ),
                     _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'name', placeholder: 'Track Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
+                    _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'url', placeholder: 'Track Url', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
+                    _react2.default.createElement('br', null),
                     _react2.default.createElement('img', { src: image }),
                     _react2.default.createElement('br', null),
+                    _react2.default.createElement(
+                        'h6',
+                        null,
+                        'Click below, upload image'
+                    ),
                     _react2.default.createElement(_reactDropzone2.default, { onDrop: this.uploadImage.bind(this) }),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement(
@@ -2476,8 +2483,6 @@ var TrackPreview = function (_Component) {
                             _react2.default.createElement(
                                 "a",
                                 { href: "#" },
-                                _react2.default.createElement("i", { className: "icon-time" }),
-                                " ",
                                 this.props.track.url,
                                 " "
                             )
@@ -2488,7 +2493,6 @@ var TrackPreview = function (_Component) {
                             _react2.default.createElement(
                                 "a",
                                 { href: "#" },
-                                _react2.default.createElement("i", { className: "icon-map-marker2" }),
                                 "  "
                             )
                         )

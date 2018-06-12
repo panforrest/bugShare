@@ -20,8 +20,9 @@ class TrackPreview extends Component {
                     </div>
                     <ul className="entry-meta clearfix">
                         
-                        <li><a href="#"><i className="icon-time"></i> {this.props.track.url} </a></li>
-                        <li><a href="#"><i className="icon-map-marker2"></i>  </a></li>
+                        <li><a href="#">{this.props.track.url} </a></li>
+
+                        <li><a href="#">  </a></li>
                     </ul>
 
                     <hr style={{borderTop:'1px solid #ddd'}} />

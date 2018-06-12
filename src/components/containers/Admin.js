@@ -232,13 +232,15 @@ class Admin extends Component {
     		<div>
                 {(this.props.currentUser == null) ? <Signup onRegister={this.register.bind(this)} onLogin={this.login.bind(this)}/> : 
                     <div>
-                        <h2>Welcome, {this.props.currentUser.firstName}</h2> 
+                        <h2>Hi, {this.props.currentUser.firstName}</h2> 
 
 
 
                         <h3>Create a new Track</h3>
                         <input onChange={this.updateTrack.bind(this)} type="text" id="name" placeholder="Track Name" className="form-control" style={{marginTop:1, marginLeft:12, width:95+'%'}}/><br />
+                        <input onChange={this.updateTrack.bind(this)} type="text" id="url" placeholder="Track Url" className="form-control" style={{marginTop:1, marginLeft:12, width:95+'%'}}/><br />
                         <img src={image} /><br />
+                        <h6>Click below, upload image</h6>
                         <Dropzone onDrop={this.uploadImage.bind(this)}/>
                         <br />
                         <button onClick={this.submitTrack.bind(this)} className="btn btn-success">Submit New Track</button><br />
