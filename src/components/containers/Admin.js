@@ -206,14 +206,15 @@ class Admin extends Component {
         // console.log('uploadImage: ')
         APIManager.upload(url, image, params, (err, response) => {
             if (err) {
-                console.log('UPLOAD ERROR: '+JSON.stringify(err))
+                // console.log('UPLOAD ERROR: '+JSON.stringify(err))
+                alert(err)
                 return
             }
 
-            console.log('UPLOAD COMPLETE: '+JSON.stringify(response.body))
-            const imageUrl = response.body['secure_url']
+            // console.log('UPLOAD COMPLETE: '+JSON.stringify(response.body))
+            // const imageUrl = response.body['secure_url']
 
-            var updatedTrack = Object.assign({}, this.state.track)
+            let updatedTrack = Object.assign({}, this.state.track)
             updatedTrack['image'] = response.body['secure_url']
             this.setState({
                 track: updatedTrack
@@ -225,7 +226,7 @@ class Admin extends Component {
    
 
     render(){
-        const image = (this.state.track.image == null) ? '' : this.state.track.image
+        const image = (this.state.track.image == null) ? '' : this.state.track.image.replace('upload', 'upload/c_thumb,h_150,w_150,x_0,y_0') //thumbnail, not entire image
 
     	return(
     		<div>

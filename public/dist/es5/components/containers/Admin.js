@@ -255,12 +255,13 @@ var Admin = (function (Component) {
                 // console.log('uploadImage: ')
                 APIManager.upload(url, image, params, function (err, response) {
                     if (err) {
-                        console.log("UPLOAD ERROR: " + JSON.stringify(err));
+                        // console.log('UPLOAD ERROR: '+JSON.stringify(err))
+                        alert(err);
                         return;
                     }
 
-                    console.log("UPLOAD COMPLETE: " + JSON.stringify(response.body));
-                    var imageUrl = response.body.secure_url;
+                    // console.log('UPLOAD COMPLETE: '+JSON.stringify(response.body))
+                    // const imageUrl = response.body['secure_url']
 
                     var updatedTrack = Object.assign({}, _this.state.track);
                     updatedTrack.image = response.body.secure_url;
@@ -275,7 +276,7 @@ var Admin = (function (Component) {
         },
         render: {
             value: function render() {
-                var image = this.state.track.image == null ? "" : this.state.track.image;
+                var image = this.state.track.image == null ? "" : this.state.track.image.replace("upload", "upload/c_thumb,h_150,w_150,x_0,y_0"); //thumbnail, not entire image
 
                 return React.createElement(
                     "div",

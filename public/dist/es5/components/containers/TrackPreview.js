@@ -32,6 +32,15 @@ var TrackPreview = (function (Component) {
                     { className: "entry clearfix" },
                     React.createElement(
                         "div",
+                        { className: "entry-image hidden-sm" },
+                        React.createElement(
+                            "a",
+                            { href: "/track/" + this.props.track.slug },
+                            React.createElement("img", { src: this.props.track.image })
+                        )
+                    ),
+                    React.createElement(
+                        "div",
                         { className: "entry-c" },
                         React.createElement(
                             "div",
@@ -46,7 +55,42 @@ var TrackPreview = (function (Component) {
                                 )
                             )
                         ),
-                        React.createElement("hr", { style: { borderTop: "1px solid #ddd" } })
+                        React.createElement(
+                            "ul",
+                            { className: "entry-meta clearfix" },
+                            React.createElement(
+                                "li",
+                                null,
+                                React.createElement(
+                                    "a",
+                                    { href: "#" },
+                                    React.createElement("i", { className: "icon-time" }),
+                                    " ",
+                                    this.props.track.url,
+                                    " "
+                                )
+                            ),
+                            React.createElement(
+                                "li",
+                                null,
+                                React.createElement(
+                                    "a",
+                                    { href: "#" },
+                                    React.createElement("i", { className: "icon-map-marker2" }),
+                                    "  "
+                                )
+                            )
+                        ),
+                        React.createElement("hr", { style: { borderTop: "1px solid #ddd" } }),
+                        React.createElement(
+                            "div",
+                            { className: "entry-content" },
+                            React.createElement(
+                                "p",
+                                null,
+                                "Description: "
+                            )
+                        )
                     )
                 );
             },
