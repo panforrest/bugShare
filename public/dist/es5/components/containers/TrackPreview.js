@@ -13,6 +13,7 @@ var _react = require("react");
 var React = _interopRequire(_react);
 
 var Component = _react.Component;
+var DateUtils = require("../../utils").DateUtils;
 var TrackPreview = (function (Component) {
     function TrackPreview() {
         _classCallCheck(this, TrackPreview);
@@ -66,15 +67,6 @@ var TrackPreview = (function (Component) {
                                     { href: "#" },
                                     this.props.track.url,
                                     " "
-                                )
-                            ),
-                            React.createElement(
-                                "li",
-                                null,
-                                React.createElement(
-                                    "a",
-                                    { href: "#" },
-                                    "  "
                                 )
                             )
                         ),

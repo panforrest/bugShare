@@ -1,9 +1,10 @@
 // <textarea onChange={this.updateBug.bind(this)} placeholder="Response" id="response" className="form-control"></textarea><br /> 
 import React, { Component } from 'react'
-import { APIManager } from '../../utils' 
+import { APIManager, DateUtils } from '../../utils' 
 import { Nav } from '../containers'
 import actions from '../../actions'
 import { connect } from 'react-redux'
+import Time from 'react-time'
 
 class Track extends Component {
     constructor(){
@@ -102,7 +103,7 @@ class Track extends Component {
         console.log(JSON.stringify(this.props.track._id))
         console.log(JSON.stringify(this.props.currentUser.id))
         bug['track'] = this.props.track._id
-        bug['profile'] = this.props.currentUser.id
+        bug['profile'] = this.props.currentUser.firstName
 
         APIManager.post('/api/bug', bug, (err, response) => {
             if (err) {
@@ -122,7 +123,7 @@ class Track extends Component {
         var bugList = this.props.bugs.map((bug, i) => {
             return (
                 <a key={i} href="#" className="list-group-item">
-                    <h4 className="list-group-item-heading"><a href={'/bug/'+bug.slug}>{bug.title}, {bug.timestamp}</a></h4>
+                    <h4 className="list-group-item-heading">User {bug.profile} contribute ({DateUtils.formattedDate(bug.timestamp)}): <a href={'/bug/'+bug.slug}>{bug.title} </a></h4>
                     <p className="list-group-item-text">{bug.detail}</p>
                 </a> 
             )

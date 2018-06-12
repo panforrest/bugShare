@@ -16,11 +16,16 @@ var _react = require("react");
 var React = _interopRequire(_react);
 
 var Component = _react.Component;
-var APIManager = require("../../utils").APIManager;
+var _utils = require("../../utils");
+
+var APIManager = _utils.APIManager;
+var DateUtils = _utils.DateUtils;
 var Nav = require("../containers").Nav;
 var actions = _interopRequire(require("../../actions"));
 
 var connect = require("react-redux").connect;
+var Time = _interopRequire(require("react-time"));
+
 var Track = (function (Component) {
     function Track() {
         _classCallCheck(this, Track);
@@ -134,7 +139,7 @@ var Track = (function (Component) {
                 console.log(JSON.stringify(this.props.track._id));
                 console.log(JSON.stringify(this.props.currentUser.id));
                 bug.track = this.props.track._id;
-                bug.profile = this.props.currentUser.id;
+                bug.profile = this.props.currentUser.firstName;
 
                 APIManager.post("/api/bug", bug, function (err, response) {
                     if (err) {
@@ -160,12 +165,16 @@ var Track = (function (Component) {
                         React.createElement(
                             "h4",
                             { className: "list-group-item-heading" },
+                            "User ",
+                            bug.profile,
+                            " contribute (",
+                            DateUtils.formattedDate(bug.timestamp),
+                            "): ",
                             React.createElement(
                                 "a",
                                 { href: "/bug/" + bug.slug },
                                 bug.title,
-                                ", ",
-                                bug.timestamp
+                                " "
                             )
                         ),
                         React.createElement(

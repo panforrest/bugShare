@@ -3,11 +3,11 @@ var mongoose = require('mongoose')
 var BugSchema = new mongoose.Schema({
     profile: {type:String, default:''},
     track: {type:String, default:''},
-    title: {type:String, defualt:''},
+    title: {type:String, default:''},
     slug: {type:String, default:''},
     detail: {type:String, default:''},
     // response: {type:String, default:''},
-    timestamp: {type:String, default:Date.now}
+    timestamp: {type:Date, default:Date.now}
 })
 
 BugSchema.methods.summary = function(){

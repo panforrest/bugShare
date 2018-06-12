@@ -4,7 +4,7 @@ var SolutionSchema = new mongoose.Schema({
 	profile:{type:String},
 	bug:{type:String},
 	text:{type:String},    
-    timestamp: {type:String, default:Date.now}
+    timestamp: {type:Date, default:Date.now}
 })
 
 SolutionSchema.methods.summary = function(){
