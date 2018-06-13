@@ -1,15 +1,21 @@
+// <img src={this.props.track.image}  />
+// src={image+'=s200-c'} />
 import React, { Component } from 'react'
 import { DateUtils } from '../../utils'
 
 class TrackPreview extends Component {
 	render(){
+        var image = this.props.track.image || null
+        var image = (image == null) ? 'https://lh3.googleusercontent.com/tEbgWu7nwkBizAq1Z8Z5_itqjK_Xd1pOxNTlLNDwx7Zi00269zqeGJ83IOibQHZ3eC7nom3fJgo4KlhEWAJFEFErnw'+'=s200-c' : image
+
 		return (
 
 			<div className="entry clearfix">
 
                 <div className="entry-image hidden-sm">
                     <a href={'/track/'+this.props.track.slug}>
-                        <img src={this.props.track.image}  />
+                        
+                        <img style={localStyle.trackImage} src={image} />
                     </a>
                 </div>
 
@@ -36,6 +42,16 @@ class TrackPreview extends Component {
 
 		)
 	}
+}
+
+const localStyle = {
+    trackImage: {
+        // width:100+'%',
+        width:250,
+        padding:10,
+        // border:'1px solid #ddd',
+        background:'#ffffa' 
+    }
 }
 
 export default TrackPreview

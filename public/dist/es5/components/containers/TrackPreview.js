@@ -8,6 +8,8 @@ var _inherits = function (subClass, superClass) { if (typeof superClass !== "fun
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
+// <img src={this.props.track.image}  />
+// src={image+'=s200-c'} />
 var _react = require("react");
 
 var React = _interopRequire(_react);
@@ -28,6 +30,9 @@ var TrackPreview = (function (Component) {
     _prototypeProperties(TrackPreview, null, {
         render: {
             value: function render() {
+                var image = this.props.track.image || null;
+                var image = image == null ? "https://lh3.googleusercontent.com/tEbgWu7nwkBizAq1Z8Z5_itqjK_Xd1pOxNTlLNDwx7Zi00269zqeGJ83IOibQHZ3eC7nom3fJgo4KlhEWAJFEFErnw" + "=s200-c" : image;
+
                 return React.createElement(
                     "div",
                     { className: "entry clearfix" },
@@ -37,7 +42,7 @@ var TrackPreview = (function (Component) {
                         React.createElement(
                             "a",
                             { href: "/track/" + this.props.track.slug },
-                            React.createElement("img", { src: this.props.track.image })
+                            React.createElement("img", { style: localStyle.trackImage, src: image })
                         )
                     ),
                     React.createElement(
@@ -91,5 +96,15 @@ var TrackPreview = (function (Component) {
 
     return TrackPreview;
 })(Component);
+
+var localStyle = {
+    trackImage: {
+        // width:100+'%',
+        width: 250,
+        padding: 10,
+        // border:'1px solid #ddd',
+        background: "#ffffa"
+    }
+};
 
 module.exports = TrackPreview;

@@ -158,9 +158,27 @@ var Bug = (function (Component) {
                                     "div",
                                     { className: "postcontent nobottommargin clearfix" },
                                     React.createElement(
-                                        "h3",
+                                        "h4",
                                         null,
-                                        "Add Your Solution"
+                                        "BUG NAME: ",
+                                        this.props.bug.title
+                                    ),
+                                    React.createElement(
+                                        "p",
+                                        null,
+                                        "WHEN/WHERE: ",
+                                        this.props.bug.when_where
+                                    ),
+                                    React.createElement(
+                                        "p",
+                                        null,
+                                        "SYMPTOM: ",
+                                        this.props.bug.symptom
+                                    ),
+                                    React.createElement(
+                                        "h4",
+                                        null,
+                                        "Share Your Response:"
                                     ),
                                     React.createElement("textarea", { onChange: this.updateSolution.bind(this), className: "form-control", type: "text", id: "text", placeholder: "Provide Your Solution or Contribute Your Response/experience" }),
                                     React.createElement("br", null),

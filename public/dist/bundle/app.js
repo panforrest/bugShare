@@ -940,9 +940,27 @@ var Bug = function (_Component) {
                                 'div',
                                 { className: 'postcontent nobottommargin clearfix' },
                                 _react2.default.createElement(
-                                    'h3',
+                                    'h4',
                                     null,
-                                    'Add Your Solution'
+                                    'BUG NAME: ',
+                                    this.props.bug.title
+                                ),
+                                _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'WHEN/WHERE: ',
+                                    this.props.bug.when_where
+                                ),
+                                _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'SYMPTOM: ',
+                                    this.props.bug.symptom
+                                ),
+                                _react2.default.createElement(
+                                    'h4',
+                                    null,
+                                    'Share Your Response:'
                                 ),
                                 _react2.default.createElement('textarea', { onChange: this.updateSolution.bind(this), className: 'form-control', type: 'text', id: 'text', placeholder: 'Provide Your Solution or Contribute Your Response/experience' }),
                                 _react2.default.createElement('br', null),
@@ -1537,7 +1555,7 @@ var Track = function (_Component) {
                         { className: 'list-group-item-heading' },
                         'User ',
                         bug.profile,
-                        ' contribute (',
+                        ' contribute a bug (',
                         _utils.DateUtils.formattedDate(bug.timestamp),
                         '): ',
                         _react2.default.createElement(
@@ -1575,9 +1593,15 @@ var Track = function (_Component) {
                                     'TRACK NAME: ',
                                     this.props.track.name
                                 ),
+                                _react2.default.createElement(
+                                    'p',
+                                    null,
+                                    'TRACK DESCRIPTION: ',
+                                    this.props.track.description
+                                ),
                                 _react2.default.createElement('input', { onChange: this.updateBug.bind(this), placeholder: 'Name your bug', id: 'title', className: 'form-control', type: 'text' }),
                                 _react2.default.createElement('br', null),
-                                _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'When/Where', id: 'when_where', className: 'form-control' }),
+                                _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'When/Where: it can be at a particular commit of a github repository, or at a certain time of a youtube tutorial, etc.', id: 'when_where', className: 'form-control' }),
                                 _react2.default.createElement('br', null),
                                 _react2.default.createElement('textarea', { onChange: this.updateBug.bind(this), placeholder: 'Symptom', id: 'symptom', className: 'form-control' }),
                                 _react2.default.createElement('br', null),
@@ -1939,7 +1963,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <img src={this.props.track.image}  />
+// src={image+'=s200-c'} />
+
 
 var TrackPreview = function (_Component) {
     _inherits(TrackPreview, _Component);
@@ -1953,6 +1979,9 @@ var TrackPreview = function (_Component) {
     _createClass(TrackPreview, [{
         key: 'render',
         value: function render() {
+            var image = this.props.track.image || null;
+            var image = image == null ? 'https://lh3.googleusercontent.com/tEbgWu7nwkBizAq1Z8Z5_itqjK_Xd1pOxNTlLNDwx7Zi00269zqeGJ83IOibQHZ3eC7nom3fJgo4KlhEWAJFEFErnw' + '=s200-c' : image;
+
             return _react2.default.createElement(
                 'div',
                 { className: 'entry clearfix' },
@@ -1962,7 +1991,7 @@ var TrackPreview = function (_Component) {
                     _react2.default.createElement(
                         'a',
                         { href: '/track/' + this.props.track.slug },
-                        _react2.default.createElement('img', { src: this.props.track.image })
+                        _react2.default.createElement('img', { style: localStyle.trackImage, src: image })
                     )
                 ),
                 _react2.default.createElement(
@@ -2013,6 +2042,16 @@ var TrackPreview = function (_Component) {
 
     return TrackPreview;
 }(_react.Component);
+
+var localStyle = {
+    trackImage: {
+        // width:100+'%',
+        width: 250,
+        padding: 10,
+        // border:'1px solid #ddd',
+        background: '#ffffa'
+    }
+};
 
 exports.default = TrackPreview;
 

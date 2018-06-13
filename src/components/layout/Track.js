@@ -124,7 +124,7 @@ class Track extends Component {
         var bugList = this.props.bugs.map((bug, i) => {
             return (
                 <a key={i} href="#" className="list-group-item">
-                    <h4 className="list-group-item-heading">User {bug.profile} contribute ({DateUtils.formattedDate(bug.timestamp)}): <a href={'/bug/'+bug.slug}>{bug.title} </a></h4>
+                    <h4 className="list-group-item-heading">User {bug.profile} contribute a bug ({DateUtils.formattedDate(bug.timestamp)}): <a href={'/bug/'+bug.slug}>{bug.title} </a></h4>
                     <p className="list-group-item-text">{bug.detail}</p>
                 </a> 
             )
@@ -139,8 +139,9 @@ class Track extends Component {
                             <div className="postcontent nobottommargin clearfix">
 
                                 <h4>TRACK NAME: {this.props.track.name}</h4>
+                                <p>TRACK DESCRIPTION: {this.props.track.description}</p>
                                 <input onChange={this.updateBug.bind(this)} placeholder="Name your bug" id="title" className="form-control" type="text" /><br />
-                                <textarea onChange={this.updateBug.bind(this)} placeholder="When/Where" id="when_where" className="form-control"></textarea><br /> 
+                                <textarea onChange={this.updateBug.bind(this)} placeholder="When/Where: it can be at a particular commit of a github repository, or at a certain time of a youtube tutorial, etc." id="when_where" className="form-control"></textarea><br /> 
                                 <textarea onChange={this.updateBug.bind(this)} placeholder="Symptom" id="symptom" className="form-control"></textarea><br /> 
                                 <button onClick={this.submitBug.bind(this)} className="btn btn-success">Record a new bug</button><br />
                                 <hr style={{borderTop: '1px solid red #444'}} />

@@ -168,7 +168,7 @@ var Track = (function (Component) {
                             { className: "list-group-item-heading" },
                             "User ",
                             bug.profile,
-                            " contribute (",
+                            " contribute a bug (",
                             DateUtils.formattedDate(bug.timestamp),
                             "): ",
                             React.createElement(
@@ -206,9 +206,15 @@ var Track = (function (Component) {
                                         "TRACK NAME: ",
                                         this.props.track.name
                                     ),
+                                    React.createElement(
+                                        "p",
+                                        null,
+                                        "TRACK DESCRIPTION: ",
+                                        this.props.track.description
+                                    ),
                                     React.createElement("input", { onChange: this.updateBug.bind(this), placeholder: "Name your bug", id: "title", className: "form-control", type: "text" }),
                                     React.createElement("br", null),
-                                    React.createElement("textarea", { onChange: this.updateBug.bind(this), placeholder: "When/Where", id: "when_where", className: "form-control" }),
+                                    React.createElement("textarea", { onChange: this.updateBug.bind(this), placeholder: "When/Where: it can be at a particular commit of a github repository, or at a certain time of a youtube tutorial, etc.", id: "when_where", className: "form-control" }),
                                     React.createElement("br", null),
                                     React.createElement("textarea", { onChange: this.updateBug.bind(this), placeholder: "Symptom", id: "symptom", className: "form-control" }),
                                     React.createElement("br", null),

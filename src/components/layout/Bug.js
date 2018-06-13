@@ -107,8 +107,11 @@ class Bug extends Component {
                     <div className="content-wrap">
                         <div className="container clearfix">
                             <div className="postcontent nobottommargin clearfix">
+                                <h4>BUG NAME: {this.props.bug.title}</h4>
+                                <p>WHEN/WHERE: {this.props.bug.when_where}</p>
+                                <p>SYMPTOM: {this.props.bug.symptom}</p>
 
-                                <h3>Add Your Solution</h3>
+                                <h4>Share Your Response:</h4>
                                 <textarea onChange={this.updateSolution.bind(this)} className="form-control" type='text' id='text' placeholder='Provide Your Solution or Contribute Your Response/experience' />
                                 <br />
                                 <button onClick={this.submitSolution.bind(this)}>Submit</button><br />
