@@ -95,8 +95,8 @@ class Track extends Component {
                 slug += '-'
         }
 
-        slug = slug.replace('?', '-')
-        // slug = slug.replace('"', '-')
+        slug = slug.replace(/['"]+/g, '')
+        slug = slug.replace(/\//g, '') 
         bug['slug'] = slug
         console.log(JSON.stringify(bug))
 

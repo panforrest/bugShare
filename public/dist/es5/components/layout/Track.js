@@ -131,8 +131,8 @@ var Track = (function (Component) {
                     if (i != parts.length - 1) slug += "-";
                 }
 
-                slug = slug.replace("?", "-");
-                // slug = slug.replace('"', '-')
+                slug = slug.replace(/['"]+/g, "");
+                slug = slug.replace(/\//g, "");
                 bug.slug = slug;
                 console.log(JSON.stringify(bug));
 

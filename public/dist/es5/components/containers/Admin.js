@@ -154,9 +154,32 @@ var Admin = (function (Component) {
             configurable: true
         },
         submitTrack: {
+
+            // slugify(string) {
+            //   return string
+            //     .toString()
+            //     .trim()
+            //     .toLowerCase()
+            //     .replace(/\s+/g, "-")
+            //     .replace(/[^\w\-]+/g, "")
+            //     .replace(/\-\-+/g, "-")
+            //     .replace(/^-+/, "")
+            //     .replace(/-+$/, "");
+            //     .replace(/\s+/g, '-') // Replace spaces with
+            //     .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+            //     .replace(/&/g, '-and-') // Replace & with ‘and’
+            //     .replace(/["']/g, "");// Replace " ' with ‘’
+            //     .replace(/['"]+/g, '')
+            //     .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+            //     .replace(/\-\-+/g, '-') // Replace multiple — with single -
+            //     .replace(/^-+/, '') // Trim — from start of text .replace(/-+$/, '') // Trim — from end of text
+            // }
+
+
             value: function submitTrack(event) {
                 var _this = this;
                 event.preventDefault();
+                // var _this = this
                 console.log("to submitTrack: " + JSON.stringify(this.state.track));
                 var track = this.state.track;
                 var name = track.name;
@@ -175,7 +198,9 @@ var Admin = (function (Component) {
                     if (i != parts.length - 1) slug += "-";
                 }
 
-                slug = slug.replace("?", "-");
+                slug = slug.replace(/['"]+/g, "");
+                slug = slug.replace(/\//g, "");
+
                 track.slug = slug;
                 console.log(JSON.stringify(track));
 
