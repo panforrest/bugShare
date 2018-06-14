@@ -95,8 +95,15 @@ var Bug = (function (Component) {
             value: function submitSolution(event) {
                 var _this = this;
                 event.preventDefault();
+                var text = this.state.solution.text;
+
                 if (this.props.currentUser == null) {
                     alert("Please log in to add new solution!");
+                    return;
+                }
+
+                if (text.length == 0) {
+                    alert("Please fill in solution text!");
                     return;
                 }
 

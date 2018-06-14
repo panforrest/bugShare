@@ -879,8 +879,15 @@ var Bug = function (_Component) {
             var _this5 = this;
 
             event.preventDefault();
+            var text = this.state.solution.text;
+
             if (this.props.currentUser == null) {
                 alert('Please log in to add new solution!');
+                return;
+            }
+
+            if (text.length == 0) {
+                alert('Please fill in solution text!');
                 return;
             }
 
@@ -1980,7 +1987,7 @@ var TrackPreview = function (_Component) {
         key: 'render',
         value: function render() {
             var image = this.props.track.image || null;
-            var image = image == null ? 'https://lh3.googleusercontent.com/tEbgWu7nwkBizAq1Z8Z5_itqjK_Xd1pOxNTlLNDwx7Zi00269zqeGJ83IOibQHZ3eC7nom3fJgo4KlhEWAJFEFErnw' + '=s200-c' : image;
+            var image = image == null ? 'https://lh3.googleusercontent.com/LrqMbAmiROXMDDWg1RPy4t8WXf5DiMcm5zi-2rqqKM8LFPkszUph0OcNt1Eyz0evdb3PAeJY9nj6B74DnBT78RtWhag' + '=s200-c' : image;
 
             return _react2.default.createElement(
                 'div',
@@ -2382,9 +2389,15 @@ var Admin = function (_Component) {
             console.log('to submitTrack: ' + JSON.stringify(this.state.track));
             var track = this.state.track;
             var name = track.name;
+            var url = track.url;
 
             if (name.length == 0) {
                 alert('Please fill in Track Name!');
+                return;
+            }
+
+            if (url.length == 0) {
+                alert('Please fill in url!');
                 return;
             }
 
@@ -2512,7 +2525,7 @@ var Admin = function (_Component) {
                     ),
                     _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'name', placeholder: 'Track Name', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
-                    _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'url', placeholder: 'Track Url', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
+                    _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'url', placeholder: 'Track Url: github, youtube, etc.', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),
                     _react2.default.createElement('input', { onChange: this.updateTrack.bind(this), type: 'text', id: 'description', placeholder: 'Track Description', className: 'form-control', style: { marginTop: 1, marginLeft: 12, width: 95 + '%' } }),
                     _react2.default.createElement('br', null),

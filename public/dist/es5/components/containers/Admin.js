@@ -183,9 +183,15 @@ var Admin = (function (Component) {
                 console.log("to submitTrack: " + JSON.stringify(this.state.track));
                 var track = this.state.track;
                 var name = track.name;
+                var url = track.url;
 
                 if (name.length == 0) {
                     alert("Please fill in Track Name!");
+                    return;
+                }
+
+                if (url.length == 0) {
+                    alert("Please fill in url!");
                     return;
                 }
 
@@ -322,7 +328,7 @@ var Admin = (function (Component) {
                         ),
                         React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "name", placeholder: "Track Name", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
                         React.createElement("br", null),
-                        React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "url", placeholder: "Track Url", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
+                        React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "url", placeholder: "Track Url: github, youtube, etc.", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
                         React.createElement("br", null),
                         React.createElement("input", { onChange: this.updateTrack.bind(this), type: "text", id: "description", placeholder: "Track Description", className: "form-control", style: { marginTop: 1, marginLeft: 12, width: 95 + "%" } }),
                         React.createElement("br", null),

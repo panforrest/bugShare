@@ -31,7 +31,7 @@ var TrackPreview = (function (Component) {
         render: {
             value: function render() {
                 var image = this.props.track.image || null;
-                var image = image == null ? "https://lh3.googleusercontent.com/tEbgWu7nwkBizAq1Z8Z5_itqjK_Xd1pOxNTlLNDwx7Zi00269zqeGJ83IOibQHZ3eC7nom3fJgo4KlhEWAJFEFErnw" + "=s200-c" : image;
+                var image = image == null ? "https://lh3.googleusercontent.com/LrqMbAmiROXMDDWg1RPy4t8WXf5DiMcm5zi-2rqqKM8LFPkszUph0OcNt1Eyz0evdb3PAeJY9nj6B74DnBT78RtWhag" + "=s200-c" : image;
 
                 return React.createElement(
                     "div",
