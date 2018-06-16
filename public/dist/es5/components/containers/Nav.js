@@ -89,7 +89,7 @@ var Nav = (function (Component) {
 										null,
 										React.createElement(
 											"a",
-											{ href: "/Signup/Login" },
+											{ href: "/register" },
 											React.createElement(
 												"div",
 												null,

@@ -1,4 +1,3 @@
-			    // <h3>Hi, {this.props.currentUser.firstName} {this.props.currentUser.lastName}</h3>
 import React, { Component } from 'react'
 import { APIManager } from '../../utils'
 import actions from '../../actions'   //import actions from '../../constants'
@@ -60,6 +59,8 @@ class Account extends Component {
                     </div>
                 </div>
             </section> 
+
+            
 		)
 	}
 }

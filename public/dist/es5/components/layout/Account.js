@@ -10,7 +10,6 @@ var _inherits = function (subClass, superClass) { if (typeof superClass !== "fun
 
 var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
 
-// <h3>Hi, {this.props.currentUser.firstName} {this.props.currentUser.lastName}</h3>
 var _react = require("react");
 
 var React = _interopRequire(_react);

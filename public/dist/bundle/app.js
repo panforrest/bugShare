@@ -243,7 +243,7 @@ var Nav = function (_Component) {
 									null,
 									_react2.default.createElement(
 										'a',
-										{ href: '/Signup/Login' },
+										{ href: '/register' },
 										_react2.default.createElement(
 											'div',
 											null,
@@ -586,7 +586,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var initialState = {
 
-    currentUser: null //{}
+    // currentUser: null //{}
+    currentUser: {
+        // id: null,
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+    }
 
 };
 
@@ -1124,6 +1131,8 @@ var Register = function (_Component) {
     }, {
         key: 'login',
         value: function login(credentials) {
+            var _this3 = this;
+
             _utils.APIManager.post('/account/login', credentials, function (err, response) {
                 if (err) {
                     var msg = err.message || err;
@@ -1133,7 +1142,7 @@ var Register = function (_Component) {
                 }
 
                 // console.log(JSON.stringify(response))
-                // this.props.currentUserReceived(response.profile)
+                _this3.props.currentUserReceived(response.profile);
                 console.log('USER LOGGED IN: ' + JSON.stringify(response));
                 window.location.href = '/account';
             });
@@ -1265,8 +1274,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // <h3>Hi, {this.props.currentUser.firstName} {this.props.currentUser.lastName}</h3>
-//import actions from '../../constants'
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //import actions from '../../constants'
 
 
 var Account = function (_Component) {

@@ -32,7 +32,7 @@ class Nav extends Component {
 		                    <nav id="primary-menu">
 		                        <ul>
 		                            <li><a href="/"><div>Home</div></a></li>
-		                            <li><a href="/Signup/Login"><div>Register</div></a></li>
+		                            <li><a href="/register"><div>Register</div></a></li>
 		                            <li><a href="/"><div>{content}</div></a></li>
 		                        </ul>
 		                    </nav>
