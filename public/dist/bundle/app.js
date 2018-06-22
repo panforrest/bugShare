@@ -900,7 +900,7 @@ var Bug = function (_Component) {
 
             var solution = Object.assign({}, this.state.solution);
             solution['bug'] = this.props.bug.id;
-            solution['profile'] = this.props.currentUser.id;
+            solution['profile'] = this.props.currentUser.firstName;
             console.log(JSON.stringify(solution));
             _utils.APIManager.post('/api/solution', solution, function (err, response) {
                 if (err) {
@@ -927,7 +927,11 @@ var Bug = function (_Component) {
                         _react2.default.createElement(
                             'h4',
                             { className: 'list-group-item-heading' },
-                            solution.text
+                            'Contributed by User ',
+                            solution.profile,
+                            '  (',
+                            _utils.DateUtils.formattedDate(solution.timestamp),
+                            '): '
                         ),
                         _react2.default.createElement(
                             'p',
@@ -1568,9 +1572,9 @@ var Track = function (_Component) {
                     _react2.default.createElement(
                         'h4',
                         { className: 'list-group-item-heading' },
-                        'User ',
+                        'Contributed by User ',
                         bug.profile,
-                        ' contribute a bug (',
+                        '  (',
                         _utils.DateUtils.formattedDate(bug.timestamp),
                         '): ',
                         _react2.default.createElement(

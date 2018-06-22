@@ -15,7 +15,10 @@ var _react = require("react");
 var React = _interopRequire(_react);
 
 var Component = _react.Component;
-var APIManager = require("../../utils").APIManager;
+var _utils = require("../../utils");
+
+var APIManager = _utils.APIManager;
+var DateUtils = _utils.DateUtils;
 var actions = _interopRequire(require("../../actions"));
 
 var connect = require("react-redux").connect;
@@ -110,7 +113,7 @@ var Bug = (function (Component) {
 
                 var solution = Object.assign({}, this.state.solution);
                 solution.bug = this.props.bug.id;
-                solution.profile = this.props.currentUser.id;
+                solution.profile = this.props.currentUser.firstName;
                 console.log(JSON.stringify(solution));
                 APIManager.post("/api/solution", solution, function (err, response) {
                     if (err) {
@@ -138,7 +141,11 @@ var Bug = (function (Component) {
                             React.createElement(
                                 "h4",
                                 { className: "list-group-item-heading" },
-                                solution.text
+                                "Contributed by User ",
+                                solution.profile,
+                                "  (",
+                                DateUtils.formattedDate(solution.timestamp),
+                                "): "
                             ),
                             React.createElement(
                                 "p",

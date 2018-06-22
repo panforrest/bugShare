@@ -166,9 +166,9 @@ var Track = (function (Component) {
                         React.createElement(
                             "h4",
                             { className: "list-group-item-heading" },
-                            "User ",
+                            "Contributed by User ",
                             bug.profile,
-                            " contribute a bug (",
+                            "  (",
                             DateUtils.formattedDate(bug.timestamp),
                             "): ",
                             React.createElement(

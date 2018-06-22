@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { APIManager } from '../../utils'
+import { APIManager, DateUtils } from '../../utils'
 import actions from '../../actions'
 import { connect } from 'react-redux'
 
@@ -81,7 +81,7 @@ class Bug extends Component {
         
         var solution = Object.assign({}, this.state.solution)
         solution['bug'] = this.props.bug.id
-        solution['profile'] = this.props.currentUser.id
+        solution['profile'] = this.props.currentUser.firstName
         console.log(JSON.stringify(solution))
         APIManager.post('/api/solution', solution, (err, response) => {
             if (err) {
@@ -102,7 +102,7 @@ class Bug extends Component {
             return(
                 //<li key={i}>{solution.text}</li>
                 <a key={i} className="list-group-item">
-                    <h4 className="list-group-item-heading">{solution.text}</h4> 
+                    <h4 className="list-group-item-heading">Contributed by User {solution.profile}  ({DateUtils.formattedDate(solution.timestamp)}): </h4> 
                     <p className="list-group-item-text">{solution.text}</p>
                 </a>
             )
